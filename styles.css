@@ -1,0 +1,335 @@
+html {
+  font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif;
+}
+
+body {
+  background-color: #C1C1C1;
+}
+
+header {
+  width: 100%;
+}
+
+#header-image {
+  height: 20vh;
+  padding: 0px 25px;
+  position: relative;
+  background-image: url("./images/header-photo.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center bottom 0px;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  #header-image {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+}
+
+#header-transition {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#333333+0,7db9e8+100&1+0,0+47 */
+  background: -moz-linear-gradient(left, #333333 0%, rgba(86, 114, 136, 0) 47%, rgba(125, 185, 232, 0) 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, #333333 0%, rgba(86, 114, 136, 0) 47%, rgba(125, 185, 232, 0) 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, #333333 0%, rgba(86, 114, 136, 0) 47%, rgba(125, 185, 232, 0) 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#333333', endColorstr='#007db9e8',GradientType=1 );
+  /* IE6-9 */
+  z-index: -1;
+}
+
+.header-title {
+  font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif;
+  line-height: 1em;
+  font-size: 4.5em;
+  color: #fff;
+  z-index: 3;
+}
+
+@media (max-width: 768px) {
+  .header-title {
+    font-size: 3em;
+  }
+}
+
+.wrapper {
+  margin: 0px 25px;
+  text-align: center;
+  font-family: "Futura",Helvetica,sans-serif;
+}
+
+.grey-bar {
+  background-color: gray;
+  height: 25px;
+}
+
+#header-nav {
+  background-color: #1A1A1A;
+  min-height: 25px;
+  color: #fff;
+  padding-left: 25px;
+}
+
+@media (max-width: 765px) {
+  #header-nav {
+    height: 50px;
+    overflow-y: visible;
+  }
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  #header-nav {
+    height: 50px;
+    overflow-y: visible;
+  }
+}
+
+#header-nav ul {
+  list-style-type: none;
+}
+
+#header-nav ul li {
+  margin-right: 30px;
+}
+
+@media (max-width: 765px) {
+  #header-nav ul {
+    width: 25vw;
+    float: right;
+    z-index: 10 !important;
+    background-color: inherit;
+  }
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  #header-nav ul {
+    width: 25vw;
+    float: right;
+    z-index: 10 !important;
+    background-color: inherit;
+  }
+}
+
+.glyphicon-play {
+  display: inline-block;
+  color: #35CAFC;
+  margin-right: 5px;
+}
+
+.options-title {
+  font-size: 2em;
+  color: #000;
+}
+
+.lightgrey-bar {
+  background-color: #C1C1C1;
+  height: 1px;
+}
+
+.icon-bar {
+  background-color: white;
+}
+
+.yellow-bar {
+  background-color: #F5F0A1;
+  height: 3px;
+}
+
+.red-bar {
+  background-color: #FFAFBB;
+  height: 3px;
+}
+
+.featured {
+  width: 85vw;
+  margin: auto;
+  margin-bottom: 75px;
+}
+
+@media (min-width: 768px) {
+  .featured .featured-results {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.featured .featured-title {
+  text-align: left;
+  font-size: 1.5em;
+}
+
+@media (max-width: 768px) {
+  .featured .featured-title, .featured .featured-results {
+    margin-left: auto;
+  }
+}
+
+.featured-item-2 {
+  padding: 0px;
+  height: 25vh;
+}
+
+@media (max-width: 768px) {
+  .featured-item-2 {
+    height: 35vh;
+    margin-bottom: 20px;
+  }
+}
+
+.listing-img {
+  width: 100%;
+}
+
+.listing-info {
+  position: absolute;
+  bottom: 0px;
+  height: 35%;
+  width: 100%;
+  color: white;
+  background-color: black;
+  opacity: .5;
+}
+
+.pic-holder {
+  position: relative;
+  width: 90%;
+  height: 100%;
+  margin-right: auto;
+  border: 1px solid #000;
+  overflow-y: hidden;
+}
+
+.search-options {
+  margin: auto;
+  margin-top: 25px;
+}
+
+.btn-3d-blue {
+  display: inline-block;
+  background-color: #35CAFC;
+  position: relative;
+  border: 3px solid #000;
+  top: -20px;
+  left: -20px;
+  transition: all 100ms ease-in;
+  color: #000;
+  text-align: center;
+}
+
+.btn-3d-blue:hover {
+  top: 0px;
+  left: 0px;
+  background-color: #fff;
+  text-decoration: none;
+  color: #000;
+}
+
+.btn-3d-blue:hover:before {
+  opacity: 0;
+}
+
+.btn-3d-blue:hover:after {
+  opacity: 0;
+}
+
+.btn-3d-blue:before, .btn-3d-blue:after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  opacity: 1;
+  transition: opacity 100ms ease-in;
+  background-color: #fff;
+}
+
+.btn-3d-blue:before {
+  width: calc(100% + 5px);
+  height: 24px;
+  top: calc(100%);
+  left: 8px;
+  transform: skew(45deg);
+  border: 3px solid #000;
+}
+
+.btn-3d-blue:after {
+  height: calc(100% + 4px);
+  right: -24px;
+  width: 21px;
+  top: 8px;
+  border-top: 3px solid #000;
+  border-right: 3px solid #000;
+  transform: skewY(45deg);
+}
+
+.btn-3d {
+  letter-spacing: .25em;
+  font-family: 'apercu-regular', sans-serif;
+  text-decoration: none;
+  text-transform: uppercase;
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+}
+
+.day-btn {
+  clear: both;
+  margin: 10px 35px;
+  position: relative;
+  width: 430px;
+  height: 150px;
+}
+
+@media (max-width: 768px) {
+  .day-btn {
+    width: 275px;
+  }
+}
+
+.day-text {
+  line-height: 1em;
+  margin: 0px 55px;
+  display: flex;
+  height: 100%;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+@media (max-width: 768px) {
+  .day-text {
+    display: block;
+    margin: 45px 35px;
+  }
+}
+
+.day-text * {
+  margin-bottom: 5px;
+}
+
+.day-text-1 {
+  text-align: left;
+  font-family: inherit;
+  font-size: 1.5em;
+}
+
+.day-text-2 {
+  text-align: left;
+  font-family: "Mirador",Mirador,serif;
+  font-size: 4em;
+  height: .75em;
+  line-height: .75em;
+}
+
+@media (max-width: 768px) {
+  .day-text-2 {
+    font-size: 2.5em;
+  }
+}
