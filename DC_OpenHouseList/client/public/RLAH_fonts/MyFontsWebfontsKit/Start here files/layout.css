@@ -79,7 +79,7 @@ div.container-article {
 div.webfont-credits, .webfont-twocolumns, .webfont-sample-block {
 	padding: 0px;
 	/*border: 1px solid #CCC;*/
-	float: left;
+	float: left; 
 }
 .webfont-article-block {
 	margin: 0 auto 20px auto;
@@ -124,7 +124,7 @@ cite, em {
 	font-style: italic;
 }
 
-/*
+/* 
 	Code formatting
 */
 pre code {
