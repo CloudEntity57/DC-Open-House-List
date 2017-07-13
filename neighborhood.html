@@ -7,25 +7,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="./RLAH_fonts/Mirador Book DEMO/MyFontsWebfontskit.css" media="screen" title="no title">
-    <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
   </head>
-  <script type="text/javascript">
-    let params = 'latitude,longitude,image_urls,street_name,street_number,square_feet,mls_number,list_price,open_house_events,address,full_baths,num_bedrooms,half_baths';
-    // let params = '';
-    $.ajax({
-      url:"https://api.displet.com/residentials/search?authentication_token=82b44a7662b0abb55eebf365a61c50399b512935&;return_fields="+params+"&min_bedrooms=2&min_bathrooms=1&min_list_price=350&open_house=y&open_house_within=7&limit=15",
-      // url:"https://api.displet.com/agents/?authentication_token=82b44a7662b0abb55eebf365a61c50399b512935",
-      method:'GET',
-      headers:{
-        "accept": "application/javascript"
-      },
-      success:(val)=>{
-        console.log('results: ',val);
-      }
-    }).done((val)=>{
-      console.log('success: ',val);
-    });
-  </script>
   <body>
     <header>
       <div class="grey-bar">
@@ -52,7 +34,8 @@
 
         </div>
         <div class="header-title-container">
-          <img class="img-responsive" src="./images/DC_open House_sm-10.svg" alt="title">
+          <div class="header-title">DC'S</div>
+          <div class="header-title">OPEN <span>house list</span></div>
         </div>
       </div>
       <div class="yellow-bar"></div>
@@ -60,39 +43,21 @@
     </header>
     <div class="wrapper">
 
-      <div class="options-title" >PICK A DAY</div>
+      <div class="options-title" >PICK A NEIGHBORHOOD</div>
 
       <div class="search-options">
 
-        <a class="day-btn btn-3d btn-3d-blue" href="#">
-          <div class="day-text">
-            <div>
-              <div class="day-text-1">
-                This
-              </div>
-              <div class="day-text-2">
-                Saturday
-              </div>
-            </div>
-          </div>
-        </a>
-          <a class="day-btn btn-3d btn-3d-blue" href="#">
-            <div class="day-text">
-                <div>
-                <div class="day-text-1">
-                  This
-                </div>
-                <div class="day-text-2">
-                  Sunday
-                </div>
-              </div>
-            </div>
-          </a>
+
+
+
+
+        <a class="btn-3d btn-3d-blue-neighborhood neighborhood-btn" href="#">duPont Circle</a>
+        <a class="btn-3d btn-3d-blue-down down-btn" href="#"><span class="glyphicon glyphicon-triangle-bottom"></span></a>
 
 
       </div>
-      <div  style="margin-top:75px">
-        <a href="/neighborhood.html">neighborhood</a>
+      <div style="margin-top:55px">
+        <a href="./results.html">results</a>
       </div>
       <div class="featured">
         <div class="featured-title row">FEATURED</div>
@@ -123,8 +88,10 @@
         </div>
       </div>
       <footer>
-        <!-- <img src="./images/RLAH_logo.png" alt="logo" /> -->
-        IS A LOCALLY OWNED AND OPERATED FRANCHISE. REAL LIVING REAL ESTATE IS A NETWORK BRAND OF HSF
+        RLAH.
+        REAL ESTATE
+      |
+        REAL LIVING | AT HOME IS A LOCALLY OWNED AND OPERATED FRANCHISE. REAL LIVING REAL ESTATE IS A NETWORK BRAND OF HSF
 AFFILIATES LLC, WHICH IS MAJORITY OWNED BY HOME SERVICES OF AMERICA, INC. A BERKSHIRE HATHAWAY AFFILIATE.
       </footer>
     </div>
