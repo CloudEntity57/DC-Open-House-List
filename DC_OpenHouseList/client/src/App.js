@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import Search from './components/Search';
+import Header from './components/Header';
 import './App.css';
 
 class App extends Component {
   render() {
+    let children = this.props.children;
     return (
       <div>
-        <Search />
+        <Header />
+        { children }
       </div>
     );
   }
