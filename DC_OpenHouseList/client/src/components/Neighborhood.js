@@ -44,10 +44,16 @@ class Neighborhood extends Component{
   highlight_off(e){
     let item = e.target;
     item.className-=" highlighted";
+    item.className+=" subdivision";
   }
   select(e){
     let item = e.target;
-    this.props.selectNeighborhood(e,item.id);
+    this.setState({
+      selected:item.id
+    });
+    setTimeout(()=>{
+      this.props.selectNeighborhood(e,item.id);
+    },250);
   }
   render(){
     let neighborhoods = this.state.neighborhoods;
@@ -60,9 +66,9 @@ class Neighborhood extends Component{
       );
     });
     let dropdown = (this.state.dropdown) ? (
-        <div className="neighborhood-dropdown-list">
-        <div className="neighborhood-dropdown-opacity"></div>
-          <div className="neighborhood-dropdown">
+        <div className="neighborhood-dropdown-container">
+          <div className="neighborhood-dropdown-opacity"></div>
+          <div className="neighborhood-text">
             { neighborhoods }
           </div>
         </div>

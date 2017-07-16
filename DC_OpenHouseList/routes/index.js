@@ -3,15 +3,36 @@ var router = express.Router();
 var request = require('request');
 var https = require('https');
 let apiKey=process.env.DISPLET_API_KEY;
+let params = 'latitude,longitude,image_urls,street_name,subdivision,street_number,square_feet,mls_number,list_price,open_house_events,address,full_baths,num_bedrooms,half_baths';
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.get('/featured',function(req,res,next){
+  // let params='';
+  let url = "https://api.displet.com/residentials/search?authentication_token="+apiKey+"&;return_fields="+params+"&min_bedrooms=2&min_bathrooms=1&min_list_price=350&open_house=y&open_house_within=7";
+
+  let options = {
+    url:url,
+    headers:{
+      'Accept':'application/javascript',
+      'Referer':'http://localhost:3000'
+    }
+  }
+
+  request(options, function (error, response, body) {
+    console.log('error:', error); // Print the error if one occurred
+    console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+    // console.log('body:', body); // Print the HTML for the Google homepage.
+    body=JSON.parse(body);
+    res.json(body);
+  });
+});
+
 router.get('/open_houses',function(req,res,next){
   console.log('api key: ',apiKey);
-  let params = 'latitude,longitude,image_urls,street_name,street_number,square_feet,mls_number,list_price,open_house_events,address,full_baths,num_bedrooms,half_baths';
   // let params='';
   let url = "https://api.displet.com/residentials/search?authentication_token="+apiKey+"&;return_fields="+params+"&min_bedrooms=2&min_bathrooms=1&min_list_price=350&open_house=y&open_house_within=7";
 
@@ -33,7 +54,7 @@ router.get('/open_houses',function(req,res,next){
 });
 
 router.get('/neighborhoods',function(req,res,next){
-  let params = '';
+  params = '';
   let url = "https://api.displet.com/residentials/search?authentication_token="+apiKey+"&;return_fields="+params+"&min_bedrooms=2&min_bathrooms=1&min_list_price=350";
   let options = {
     url:url,

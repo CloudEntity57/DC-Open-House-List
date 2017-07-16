@@ -7,12 +7,20 @@ html {
   user-select: none;
 }
 
+html a {
+  color: inherit;
+}
+
 body {
   background-color: #C1C1C1;
 }
 
 header {
   width: 100%;
+}
+
+.navbar-right li {
+  cursor: pointer;
 }
 
 footer {
@@ -157,6 +165,12 @@ footer {
   margin-bottom: 25px;
 }
 
+@media (max-width: 768px) {
+  .options-title {
+    font-size: 1.5em;
+  }
+}
+
 .lightgrey-bar {
   background-color: #C1C1C1;
   height: 1px;
@@ -178,7 +192,7 @@ footer {
 
 .featured {
   width: 85vw;
-  margin: 25px auto;
+  margin: auto;
 }
 
 @media (min-width: 768px) {
@@ -191,6 +205,13 @@ footer {
 .featured .featured-title {
   text-align: left;
   font-size: 1.5em;
+  margin: auto;
+}
+
+@media (max-width: 768px) {
+  .featured .featured-title {
+    text-align: center;
+  }
 }
 
 @media (max-width: 768px) {
@@ -239,7 +260,7 @@ footer {
   position: relative;
   width: 90%;
   height: 25vh;
-  margin-right: auto;
+  margin: auto;
   border: 1px solid #000;
   overflow-y: hidden;
 }
@@ -332,6 +353,7 @@ footer {
   clear: both;
   position: relative;
   width: 430px;
+  margin: 1vw 2.5vw;
   height: 150px;
 }
 
@@ -341,22 +363,20 @@ footer {
   }
 }
 
-.neighborhood-dropdown, .sort-dropdown {
+.neighborhood-text, .sort-text {
+  overflow: scroll;
+  text-align: left;
+  height: 40vh;
   font-size: 1em;
   line-height: 1em;
   color: #fff;
-  padding: 10px 0px 20px 0px;
   position: absolute;
   width: 99%;
-  height: 30vh;
-  overflow: scroll;
-  opacity: .7;
-  background-color: #35CAFC;
   z-index: 2 !important;
 }
 
 @media (max-width: 950px) {
-  .neighborhood-dropdown, .sort-dropdown {
+  .neighborhood-text, .sort-text {
     top: 60px;
   }
 }
@@ -365,9 +385,37 @@ footer {
   top: 90px;
 }
 
+.sort-dropdown {
+  text-align: left;
+}
+
+.neighborhood-dropdown-opacity {
+  position: absolute;
+  height: 40vh;
+  width: 100%;
+  opacity: .85;
+  background-color: #35CAFC;
+  z-index: 2;
+}
+
 .highlighted {
   background-color: #95e1fb;
   z-index: 10;
+}
+
+.highlighted, .subdivision {
+  padding: 2.5px 10px;
+}
+
+.neighborhood-btn, .down-btn {
+  margin-bottom: 2vh;
+}
+
+@media (max-width: 765px) {
+  .neighborhood-btn, .down-btn {
+    padding-top: .25em !important;
+    font-size: 1.5em !important;
+  }
 }
 
 .neighborhood-btn {
@@ -375,7 +423,7 @@ footer {
   position: relative;
   width: 80%;
   height: 95px;
-  margin-right: -10px;
+  margin-right: -20px;
   font-size: 2.5em;
   line-height: 2.5em;
 }
@@ -437,7 +485,7 @@ footer {
   line-height: .75em;
 }
 
-@media (max-width: 949px) {
+@media (max-width: 950px) {
   .day-text-2 {
     font-size: 2.5em;
   }
@@ -482,9 +530,47 @@ footer {
   }
 }
 
-#map {
-  height: 400px;
+.map-frame {
+  height: 80vh;
+  border: 3px solid #000;
+  width: 95%;
+  margin: auto;
+}
+
+.listing-popup {
+  background-position: center;
+  background-size: cover;
+  height: 30vh;
+  width: 30vw;
+  color: #fff;
+  font-size: 1.25em;
+  text-align: left;
+  position: relative;
+}
+
+.listing-popup div {
+  position: absolute;
+}
+
+@media (max-width: 768px) {
+  .listing-popup {
+    height: 20vh;
+    font-size: 1em;
+  }
+}
+
+.listing-popup-text {
+  font-family: 'Futura',Helvetica,sans-serif;
+  bottom: 10px;
+  left: 10px;
+}
+
+.listing-popup-opacity {
+  bottom: 0px;
+  height: 30%;
   width: 100%;
+  background-color: #000;
+  opacity: .5;
 }
 
 .results-option {
@@ -514,6 +600,12 @@ footer {
 @media (max-width: 765px) {
   .results-option {
     line-height: 2.5em;
+  }
+  .results-option div {
+    margin-top: .5em;
+  }
+  .results-option span {
+    margin-top: .5em;
   }
 }
 

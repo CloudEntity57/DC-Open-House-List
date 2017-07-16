@@ -5,12 +5,20 @@ html{
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  a{
+    color:inherit;
+  }
 }
 body{
   background-color:#C1C1C1;
 }
 header{
   width:100%;
+}
+.navbar-right{
+  li{
+    cursor:pointer;
+  }
 }
 footer{
   font-size: .75em;
@@ -129,6 +137,9 @@ footer{
   font-size: 2em;
   color:#000;
   margin-bottom:25px;
+  @media(max-width: 768px){
+    font-size: 1.5em;
+  }
 }
 .lightgrey-bar{
   background-color:#C1C1C1;
@@ -147,7 +158,7 @@ footer{
 }
 .featured{
   width:85vw;
-  margin:25px auto;
+  margin:auto;
   .featured-results{
     @media(min-width: 768px){
       display: flex;
@@ -158,6 +169,10 @@ footer{
   .featured-title{
     text-align: left;
     font-size: 1.5em;
+    margin: auto;
+    @media(max-width: 768px){
+      text-align: center;
+    }
   }
   .featured-title,.featured-results{
     @media(max-width: 768px){
@@ -204,7 +219,7 @@ footer{
   position: relative;
   width:90%;
   height:25vh;
-  margin-right:auto;
+  margin:auto;
   border: 1px solid #000;
   overflow-y: hidden;
 }
@@ -293,44 +308,64 @@ footer{
   clear: both;
   position: relative;
   width: 430px;
+  margin:1vw 2.5vw;
   height:150px;
   @media(max-width:950px){
     width:275px;
   }
 }
-.neighborhood-dropdown,.sort-dropdown{
+
+.neighborhood-text,.sort-text{
+  overflow: scroll;
+  text-align: left;
+  height:40vh;
   font-size: 1em;
   line-height: 1em;
   color:#fff;
-  padding:10px 0px 20px 0px;
   position: absolute;
   width:99%;
-  height:30vh;
-  overflow: scroll;
-  opacity: .7;
-  background-color: #35CAFC;
   z-index: 2 !important;
   @media(max-width: 950px){
     top:60px;
   }
 }
+
 .neighborhood-dropdown{
   top:90px;
 }
 .sort-dropdown{
+  text-align: left;
 }
-.neighborhood-dropdown-list{
+.neighborhood-dropdown-opacity{
+  position: absolute;
+  height:40vh;
+  width: 100%;
+  opacity: .85;
+  background-color: #35CAFC;
+  z-index: 2;
+}
+.neighborhood-dropdown-container{
 }
 .highlighted{
   background-color:#95e1fb;
   z-index: 10;
+}
+.highlighted,.subdivision{
+  padding:2.5px 10px;
+}
+.neighborhood-btn,.down-btn{
+  margin-bottom:2vh;
+  @media(max-width:765px){
+    padding-top:.25em !important;
+    font-size: 1.5em !important;
+  }
 }
 .neighborhood-btn{
   clear: both;
   position: relative;
   width: 80%;
   height:95px;
-  margin-right:-10px;
+  margin-right:-20px;
   font-size: 2.5em;
   line-height: 2.5em;
   @media(max-width:950px){
@@ -378,7 +413,7 @@ footer{
   font-size: 4em;
   height: .75em;
   line-height: .75em;
-  @media(max-width:949px){
+  @media(max-width:950px){
     font-size:2.5em;
   }
 }
@@ -398,6 +433,9 @@ footer{
     }
   }
 }
+.search-options{
+
+}
 .results-search-options{
   position: relative;
   height:75px;
@@ -414,9 +452,40 @@ footer{
     }
   }
 }
-#map{
-  height: 400px;
-  width: 100%;
+.map-frame{
+  height: 80vh;
+  border:3px solid #000;
+  width:95%;
+  margin: auto;
+}
+.listing-popup{
+  background-position:center;
+  background-size:cover;
+  height:30vh;
+  width:30vw;
+  color:#fff;
+  font-size:1.25em;
+  text-align: left;
+  position: relative;
+  div{
+    position: absolute;
+  }
+  @media(max-width: 768px){
+    height:20vh;
+    font-size: 1em;
+  }
+}
+.listing-popup-text{
+  font-family: 'Futura',Helvetica,sans-serif;
+  bottom:10px;
+  left:10px;
+}
+.listing-popup-opacity{
+  bottom: 0px;
+  height:30%;
+  width:100%;
+  background-color: #000;
+  opacity:.5;
 }
 .results-option{
   height:75px;
@@ -439,6 +508,13 @@ footer{
   }
   @media(max-width:765px){
     line-height: 2.5em;
+    div{
+      margin-top:.5em;
+    }
+    span{
+      margin-top:.5em;
+    }
+    // padding-top:.5em;
   }
   @media only screen
     and (min-device-width : 700px)

@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
+import Map from './Map';
 import jquery from 'jquery';
 import axios from 'axios';
 import currency from 'currency-formatter';
 import moment from 'moment';
+// import _ from "lodash";
+
+
+
 
 class Results extends Component{
   constructor(props){
@@ -11,11 +16,23 @@ class Results extends Component{
       results:'',
       display:'list',
       dropdown:false,
-      selected:'SORT BY TIME'
+      selected:'SORT BY TIME',
+      popup:false,
+      markers: [
+        {
+          position: {
+            lat: 25.0112183,
+            lng: 121.52067570000001,
+          },
+          key: `Taiwan`,
+          defaultAnimation: 2,
+        }
+      ]
     }
   }
   componentWillMount(){
     let results;
+    let markers=[];
     let params = this.props.params;
     console.log('params: ',params);
     axios.get('http://localhost:8080/info/open_houses').then(
@@ -23,14 +40,49 @@ class Results extends Component{
         console.log('axios: ',response);
         results = response.data.results.map((listing)=>{
           let price = currency.format(listing.list_price,{ code: 'USD', decimalDigits: 0 });
-
+          price = price.slice(0,price.length-3);
           //get day of the week:
           let days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
           let date = moment(listing.open_house_events[0].event_start);
           let dow = date.day();
           let time = date.format('h:mmA');
-          dow = days[dow];
-          console.log('open house is on: ',dow);
+          let dowUC = days[dow];
+          dow = days[dow].toLowerCase();
+          // if(params.day && params.neighborhood){
+          //   if( dow !==params.day || listing.subdivision !==params.neighborhood){
+          //     return;
+          //   }
+          // }else if(params.day && !params.neighborhood){
+          //   if(dow !==params.day){
+          //     return;
+          //   }
+          // }
+
+          //map coordinates
+          let style1 = {
+            backgroundImage:'url('+listing.image_urls.all_thumb[0]+')'
+          }
+          markers.push(
+            {
+              position: {
+                lat: parseFloat(listing.latitude),
+                lng: parseFloat(listing.longitude),
+              },
+              // key: listing.street_number + listing.street_name,
+              defaultAnimation: 2,
+              showInfo:false,
+              infoContent: (
+                <div className="listing-popup" style={style1}>
+                  <div className="listing-popup-opacity"></div>
+                  <div className="listing-popup-text">
+                    { listing.street_number } { listing.street_name } ({dowUC})<br/>
+                    { price } <br/>
+                  </div>
+                </div>
+              )
+            }
+          );
+
           let style = {
             backgroundImage:'url('+listing.image_urls.all_thumb[0]+')',
             backgroundPosition:'center',
@@ -46,7 +98,7 @@ class Results extends Component{
               </div>
               <div className="results-div col-xs-4 results-item-info">
                 <div>
-                  { listing.street_number } { listing.street_name } ({dow})<br/>
+                  { listing.street_number } { listing.street_name } ({dowUC})<br/>
                   { price } <br/>
                 </div>
               </div>
@@ -59,7 +111,8 @@ class Results extends Component{
           );
         });
         this.setState({
-          results
+          results,
+          markers
         })
       }
     ).catch((err)=>{
@@ -70,10 +123,10 @@ class Results extends Component{
     this.pressed_toggle(e);
   }
   removeClass(){
-    jquery('.btn-3d').removeClass('btn-pressed');
+    // jquery('.btn-3d').removeClass('btn-pressed');
     jquery('.btn-3d').removeClass('list-btn-pressed');
     jquery('.btn-3d').removeClass('map-btn-pressed');
-    jquery('.btn-3d').removeClass('down-btn-pressed');
+    // jquery('.btn-3d').removeClass('down-btn-pressed');
   }
   pressed_toggle(e){
     e.preventDefault();
@@ -81,7 +134,7 @@ class Results extends Component{
     if($item.hasClass('btn-pressed')){
       $item.removeClass('btn-pressed');
     }else{
-      this.removeClass();
+      // this.removeClass();
       $item.addClass('btn-pressed');
     }
   }
@@ -117,7 +170,7 @@ class Results extends Component{
     if($item.hasClass('down-btn-pressed')){
       $item.removeClass('down-btn-pressed');
     }else{
-      this.removeClass();
+      // this.removeClass();
       $item.addClass('down-btn-pressed');
     }
     this.setState({
@@ -140,27 +193,21 @@ class Results extends Component{
     let results = this.state.results;
     let selected = this.state.selected;
     let display;
-
-    // function initMap() {
-    //   var uluru = {lat: -25.363, lng: 131.044};
-    //   var map = new google.maps.Map(document.getElementById('map'), {
-    //     zoom: 4,
-    //     center: uluru
-    //   });
-    //   var marker = new google.maps.Marker({
-    //     position: uluru,
-    //     map: map
-    //   });
-    // }
-
-    let map = (
-      <div id="map">
-
+    let divstyle = {
+      left:this.state.x,
+      top:this.state.y
+    }
+    let popup=(this.state.popup) ? (
+      <div className="listing-popup" style={divstyle}>
+        Listing Info!!
       </div>
+    ) : '';
+    let map = (
+      <Map markers={this.state.markers}/>
     );
     switch(this.state.display){
       case 'list':
-      display=results;
+      display=(results.length) ? results : (<div className="no-results-msg">Sorry - Your search did not return any results.</div>);
       break;
       case 'map':
       display=map;
@@ -171,25 +218,28 @@ class Results extends Component{
     let btn_style = 'day-btn btn-3d btn-3d-blue';
 
     let dropdown = (this.state.dropdown) ? (
-        <div className="neighborhood-dropdown-list">
-        <div className="neighborhood-dropdown-opacity"></div>
-          <div className="sort-dropdown">
-            <div id='time' onMouseEnter={this.highlight.bind(this)} onMouseLeave={this.highlight_off.bind(this)} onClick={this.select.bind(this)} className="subdivision">
-              SORT BY TIME
-            </div>
-            <div id='price' onMouseEnter={this.highlight.bind(this)} onMouseLeave={this.highlight_off.bind(this)} onClick={this.select.bind(this)} className="subdivision">
-              SORT BY PRICE
-            </div>
+      <div>
+        <div className="sort-dropdown-list">
+        <div className="sort-dropdown-opacity"></div>
+        </div>
+        <div className="sort-text">
+          <div id='time' onMouseEnter={this.highlight.bind(this)} onMouseLeave={this.highlight_off.bind(this)} onClick={this.select.bind(this)} className="subdivision">
+            SORT BY TIME
+          </div>
+          <div id='price' onMouseEnter={this.highlight.bind(this)} onMouseLeave={this.highlight_off.bind(this)} onClick={this.select.bind(this)} className="subdivision">
+            SORT BY PRICE
           </div>
         </div>
+      </div>
     ): '';
     return(
       <div>
+        { popup }
         <div className="results-search-options">
 
-          <a onClick={this.arrowToggle.bind(this)} className="btn-3d results-option select-all btn-3d-blue-results" href="#">SELECT ALL</a>
-          <a onClick={this.listToggle.bind(this)} className="btn-3d results-option list-view  btn-3d-blue-results" href="#">LIST VIEW</a>
-          <a onClick={this.mapBtnToggle.bind(this)} className="btn-3d results-option map-view btn-3d-blue-results" href="#">MAP VIEW</a>
+          <a onClick={this.arrowToggle.bind(this)} className="btn-3d results-option select-all btn-3d-blue-results" href="#"><div>SELECT ALL</div></a>
+          <a onClick={this.listToggle.bind(this)} className="btn-3d results-option list-view  btn-3d-blue-results" href="#"><div>LIST VIEW</div></a>
+          <a onClick={this.mapBtnToggle.bind(this)} className="btn-3d results-option map-view btn-3d-blue-results" href="#"><div>MAP VIEW</div></a>
           <a className="btn-3d results-option sort-by  btn-3d-blue-results" href="#">
             <div>SORT BY TIME</div>
             { dropdown }
@@ -198,26 +248,8 @@ class Results extends Component{
 
         </div>
     <div className="results">
+
       { display }
-      {/* <div className="results-item row">
-        <div className="results-div col-xs-4 results-item-pic">
-          <div className="results-item-selector">
-          </div>
-          <img src="./images/download-2.jpg" alt="listing image" />
-        </div>
-        <div className="results-div col-xs-4 results-item-info">
-          <div>
-            1234 Some Place<br/>
-            Chevy Chase, MD<br/>
-            11273
-          </div>
-        </div>
-        <div className="results-div col-xs-4 results-item-time">
-          <div className="results-item-time-box">
-            12:00 PM
-          </div>
-        </div>
-      </div> */}
 
     </div>
       </div>

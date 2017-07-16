@@ -18,7 +18,7 @@ class Featured extends Component{
         console.log('axios: ',response);
         featured = response.data.results.slice(0,3).map((listing)=>{
           let price = currency.format(listing.list_price,{ code: 'USD', decimalDigits: 0 });
-
+          price = price.slice(0,price.length-3);
           //get day of the week:
           let days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
           let date = moment(listing.open_house_events[0].event_start);
@@ -38,7 +38,7 @@ class Featured extends Component{
                 </div>
                 <div className="listing-info">
                   {listing.street_number} {listing.street_name}<br/>
-                  {price}, {dow}
+                  {price} - {dow}
                 </div>
               </div>
             </div>
