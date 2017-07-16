@@ -251,6 +251,15 @@ footer{
 .btn-pressed{
   left:20px !important;
 }
+.btn-3d-blue, .btn-3d-blue-down, .btn-3d-blue-results{
+  text-align: center;
+}
+.btn-3d-blue-neighborhood{
+  text-align: left;
+  span{
+    padding-left: 10px;
+  }
+}
 .btn-3d-blue, .btn-3d-blue-neighborhood, .btn-3d-blue-down, .btn-3d-blue-results{
   display: inline-block;
   background-color: #35CAFC;
@@ -260,7 +269,6 @@ footer{
   left: -20px;
   transition: all 100ms ease-in;
   color: #000;
-  text-align: center;
   &:before{
     content: '';
     display: inline-block;
@@ -301,7 +309,7 @@ footer{
   text-transform: uppercase;
   position: relative;
   display: inline-block;
-  text-align: center;
+  // text-align: center;
   cursor: pointer;
 }
 .day-btn {

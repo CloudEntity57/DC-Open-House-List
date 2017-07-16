@@ -296,6 +296,18 @@ footer {
   left: 20px !important;
 }
 
+.btn-3d-blue, .btn-3d-blue-down, .btn-3d-blue-results {
+  text-align: center;
+}
+
+.btn-3d-blue-neighborhood {
+  text-align: left;
+}
+
+.btn-3d-blue-neighborhood span {
+  padding-left: 10px;
+}
+
 .btn-3d-blue, .btn-3d-blue-neighborhood, .btn-3d-blue-down, .btn-3d-blue-results {
   display: inline-block;
   background-color: #35CAFC;
@@ -305,7 +317,6 @@ footer {
   left: -20px;
   transition: all 100ms ease-in;
   color: #000;
-  text-align: center;
 }
 
 .btn-3d-blue:before, .btn-3d-blue-neighborhood:before, .btn-3d-blue-down:before, .btn-3d-blue-results:before {
@@ -345,7 +356,6 @@ footer {
   text-transform: uppercase;
   position: relative;
   display: inline-block;
-  text-align: center;
   cursor: pointer;
 }
 

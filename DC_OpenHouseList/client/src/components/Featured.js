@@ -20,8 +20,11 @@ class Featured extends Component{
           let price = currency.format(listing.list_price,{ code: 'USD', decimalDigits: 0 });
           price = price.slice(0,price.length-3);
           //get day of the week:
+          let event_start = listing.open_house_events[0].event_start;
           let days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-          let date = moment(listing.open_house_events[0].event_start);
+          let date = moment(event_start);
+          let new_date = moment(event_start).calendar();
+          console.log('moment: ', date);
           let dow = date.day();
           dow = days[dow];
           console.log('open house is on: ',dow);
@@ -38,7 +41,7 @@ class Featured extends Component{
                 </div>
                 <div className="listing-info">
                   {listing.street_number} {listing.street_name}<br/>
-                  {price} - {dow}
+                  {price} - {new_date}
                 </div>
               </div>
             </div>

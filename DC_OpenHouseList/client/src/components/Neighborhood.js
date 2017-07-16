@@ -57,7 +57,7 @@ class Neighborhood extends Component{
   }
   render(){
     let neighborhoods = this.state.neighborhoods;
-    let selected = this.state.selected;
+    let selected = ( <span> {this.state.selected} </span> );
     neighborhoods = neighborhoods.map((subd)=>{
       return(
         <div id={subd} onMouseEnter={this.highlight.bind(this)} onMouseLeave={this.highlight_off.bind(this)} onClick={this.select.bind(this)} className="subdivision">
