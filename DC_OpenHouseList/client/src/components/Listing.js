@@ -95,7 +95,7 @@ class Listing extends Component{
     this.setState({
       showing_index:newIndex
     });
-  }
+  } 
   goLeft(e){
     e.preventDefault();
     let index = this.state.showing_index;
