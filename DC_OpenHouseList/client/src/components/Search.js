@@ -5,6 +5,7 @@ import Results from './Results';
 import Featured from './Featured';
 import axios from 'axios';
 import jquery from 'jquery';
+import Map from './ReactMap';
 
 class Search extends Component{
   constructor(props){
@@ -83,13 +84,22 @@ class Search extends Component{
     return(
       <div>
           <div className="wrapper">
+
+            {/* <Map /> */}
               { options }
               {/* <Days saturday={this.saturday.bind(this)} sunday={this.sunday.bind(this)} pressed_toggle={this.pressed_toggle.bind(this)} /> */}
             <Featured />
             <footer>
-              {/* <img src="../images/RLAH_logo.png" alt="logo" /> */}
-              IS A LOCALLY OWNED AND OPERATED FRANCHISE. REAL LIVING REAL ESTATE IS A NETWORK BRAND OF HSF
-      AFFILIATES LLC, WHICH IS MAJORITY OWNED BY HOME SERVICES OF AMERICA, INC. A BERKSHIRE HATHAWAY AFFILIATE.
+              <div className="footer-info">
+                <span className='logo-contain'>
+                  <img className="footer-logo" src={require('../images/rlah_logo-11-01.png')} alt="logo" />
+                </span>
+                <span className="footer-divider"> | </span>
+                <span className='logo-text'>
+                  IS A LOCALLY OWNED AND OPERATED FRANCHISE. REAL LIVING REAL ESTATE IS A NETWORK BRAND OF HSF
+                  AFFILIATES LLC, WHICH IS MAJORITY OWNED BY HOME SERVICES OF AMERICA, INC. A BERKSHIRE HATHAWAY AFFILIATE.
+                </span>
+              </div>
             </footer>
           </div>
       </div>

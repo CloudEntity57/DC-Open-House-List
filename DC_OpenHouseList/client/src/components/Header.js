@@ -22,8 +22,8 @@ class Header extends Component{
           <div className="collapse navbar-collapse">
             <ul className="nav navbar-nav navbar-right">
               <li><i className="glyphicon glyphicon-play"></i><a href="/index.html">HOME</a></li>
-              <li id="saturday" onClick={this.pickDay.bind(this)}><i className="glyphicon glyphicon-play"></i>SATURDAY</li>
-              <li id="sunday" onClick={this.pickDay.bind(this)}><i className="glyphicon glyphicon-play"></i>SUNDAY</li>
+              {/* <li id="saturday" onClick={this.pickDay.bind(this)}><i className="glyphicon glyphicon-play"></i>SATURDAY</li>
+              <li id="sunday" onClick={this.pickDay.bind(this)}><i className="glyphicon glyphicon-play"></i>SUNDAY</li> */}
             </ul>
           </div>
         </div>

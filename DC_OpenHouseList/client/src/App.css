@@ -24,7 +24,43 @@ header {
 }
 
 footer {
+  margin-top: 100px;
   font-size: .75em;
+}
+
+footer span {
+  display: inline-block;
+}
+
+footer div {
+  text-align: left;
+  padding: 20px 50px;
+  border: 1px solid #000;
+}
+
+footer .footer-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-after;
+}
+
+footer .footer-logo {
+  width: 50px;
+  padding-top: 5px;
+}
+
+footer .footer-divider {
+  width: 5%;
+  font-size: 1.5em !important;
+}
+
+footer .logo-contain {
+  height: 100%;
+  width: 10%;
+}
+
+footer .logo-text {
+  width: 70%;
 }
 
 #header-image {
@@ -933,4 +969,166 @@ footer {
     font-size: 2em;
     line-height: 4em;
   }
+}
+
+.listing-page {
+  padding: 0px 10px;
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .listing-page {
+    padding: 0px;
+  }
+}
+
+.listing-header {
+  min-height: 15vh;
+  border: 1px solid #000;
+  text-align: left;
+  padding: 0px 10px;
+}
+
+.listing-header-specs {
+  display: inline-block;
+}
+
+.listing-header-specs div {
+  line-height: 1em;
+}
+
+.listing-address {
+  display: inline-block;
+  font-size: 2.5em;
+}
+
+@media (max-width: 865px) {
+  .listing-address {
+    font-size: 2em;
+  }
+}
+
+.listing-emoji {
+  width: 4vw;
+  height: 4vw;
+}
+
+.listing-beds, .listing-baths {
+  font-size: .75em;
+  display: inline-block;
+  text-align: center;
+}
+
+.listing-header-specs {
+  font-size: 2em;
+  width: 65%;
+  height: 100%;
+}
+
+.listing-column {
+  padding: 0px;
+}
+
+.listing-photos {
+  height: 55vh;
+  width: 100%;
+  border: 3px solid #000;
+  overflow: hidden;
+}
+
+.listing-photos .photo-viewer {
+  position: relative;
+  height: 85%;
+}
+
+.listing-photos .photo-viewer .photo-container {
+  width: 100%;
+  height: 100%;
+}
+
+.listing-description {
+  padding: 10px;
+}
+
+.listing-description .office {
+  font-size: .7em;
+  font-style: italic;
+}
+
+.arrow {
+  color: #e1e4d1;
+  font-size: 2.5em;
+  position: absolute;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.arrow:hover {
+  color: #fff;
+}
+
+.arrow-right {
+  top: 50%;
+  right: 10px;
+}
+
+.arrow-left {
+  top: 50%;
+  left: 10px;
+}
+
+.scroller {
+  width: 100%;
+  height: 100%;
+  overflow-x: scroll;
+}
+
+.photo-carousel {
+  height: 15%;
+  border-top: 1px solid #000;
+  display: inline-block;
+  overflow-x: scroll;
+}
+
+.photo-carousel-interior {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.thumb-photo-container {
+  display: inline-block;
+  height: 100% !important;
+  border: 1px solid #000 !important;
+  width: 100px;
+}
+
+.thumb-viewing {
+  border: 1px solid #fff !important;
+}
+
+.listing-map {
+  height: 25vh;
+  border: 3px solid #000;
+  width: 100%;
+}
+
+.listing-specs, .listing-form, .listing-agent-photo {
+  border: 1px solid #000;
+}
+
+.listing-specs, .listing-form, .listing-agent-photo {
+  height: 35vh;
+}
+
+.listing-form {
+  display: inline-block;
+  width: 70%;
+}
+
+.listing-agent-photo {
+  display: inline-block;
+  width: 30%;
 }

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import Map from './Map';
+// import Map from './Map';
 import jquery from 'jquery';
 import axios from 'axios';
 import currency from 'currency-formatter';
 import moment from 'moment';
 // import _ from "lodash";
-
+import ReactMap from './ReactMap';
 
 
 
@@ -47,9 +47,15 @@ class Results extends Component{
           let dow = date.day();
           let time = date.format('h:mmA');
           let dowUC = days[dow];
-          dow = days[dow].toLowerCase();
+          dow = days[dow];
+          dow = dow.toLowerCase();
+
+          //FILTER:
+
           // if(params.day && params.neighborhood){
+          //   console.log('filtering by day and neighborhood :',params.day,' vs ',dow,', ','and ',params.neighborhood,' vs ',listing.subdivision);
           //   if( dow !==params.day || listing.subdivision !==params.neighborhood){
+          //     console.log('no match');
           //     return;
           //   }
           // }else if(params.day && !params.neighborhood){
@@ -203,11 +209,12 @@ class Results extends Component{
       </div>
     ) : '';
     let map = (
-      <Map markers={this.state.markers}/>
+      <ReactMap markers={this.state.markers}/>
+      // <Map markers={this.state.markers} />
     );
     switch(this.state.display){
       case 'list':
-      display=(results.length) ? results : (<div className="no-results-msg">Sorry - Your search did not return any results.</div>);
+      display=(results.length) ? results : (<div className="no-results-msg"><img src="../images/loading.gif" alt="please wait"/></div>);
       break;
       case 'map':
       display=map;

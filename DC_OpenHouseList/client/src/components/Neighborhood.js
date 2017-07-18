@@ -12,15 +12,15 @@ class Neighborhood extends Component{
   }
   componentWillMount(){
     //temporary - loading neighborhoods from DB while API key is for Columbia
-    let neighborhoods = ["Arrowhead Lake Es", "Ashland", "Bluffcreek Est", "Bonne Femme", "Bristol Lake", "Cairo", "Chapel Hill Lks", "Columbia", "Copperstone", "Country Meadows", "Creeks Edge", "Deer Crossing Est", "Eldon", "Forest Acres", "Fulton", "Gans Creek", "Gates, The", "Glasgow", "Grasslands", "Hallsville", "Harpers Pointe", "Harrisburg", "Hartsburg", "Highlands", "Hinkson Ridge", "Holts Summitt", "Hunters Ridge", "Jefferson City", "Lake Woodrail", "Marceline", "Mexico", "Old Hawthorne", "Pines", "Rocheport", "Spring Creek", "Steeplechase Est", "Stoneridge Est", "Sturgeon", "Thornbrook", "Vantage Point", "Walden Pointe", "West Lawn", "Westmount Addition", "Westwood Add", "Woodrail"];
+    let neighborhoods = ["8000 GEORGETOWN PIKE", "ARNON RIDGE", "BALLANTRAE FARMS", "BALMORAL GREENS", "BATTLETOWN MAGISTERIAL DISTRICT OF CLARKE COUNTY", "BELLEVIEW ESTATES", "BIRCHWOOD", "BLUEMONT", "BOLINVAR FARM", "BRADDOCK WOODS", "BRADLEY FARMS", "BRADLEY HILLS", "BRANDES ESTATES", "BRUFF'S ISLAND", "BUCLAND FARM", "BURNING TREE", "CAMOTOP", "CHESTON ON WYE", "CHILDS POINT", "CLEVELAND PARK", "DIFFICULT RUN VISTA", "EDGEMOOR", "ELK MANOR FARM", "ESTATES AT CREIGHTON FAR", "FIDELIO", "FOUR SEASONS RESIDENCES BALTIMORE", "FOXHALL ROAD", "GEORGETOWN", "GOLD COAST", "HICKORY TREE FARM", "HILLSBORO", "HOLLY BEACH FARM", "INNER HARBOR", "ISLAND CREEK NECK", "KALORAMA", "KENT", "LANDMARK ROAD", "LANGLEY", "LANGLEY FARMS", "MANNING DIVISION", "MASSACHUSETTS AVENUE HEI", "MCLEAN", "MCLEANS GOLD COAST", "MOUNT GORDON FARM", "MOUNTVILLE", "N/A", "NONE", "OAKENDALE", "OLD TOWN", "PALATINE SUB", "PEACOCK ESTATE", "PHILLIPS PARK", "POTOMAC OUTSIDE", "PRICKLY PEAR MOUNTAIN", "RIVER OAKS", "RIVINUS", "ROCK FORD ON THE RAPPAHANNOCK RIVER", "ROKEBY FARM", "ROKEBY FARMS", "SHADOW POINT", "SHARPS POINT ESTATE", "THE COVE", "TUFTON FARMS", "TURNBERRY TOWER", "WESLEY HEIGHTS", "WEST END", "WESTMORELAND HILLS", "WIMBLEDON FARMS", "WOODLEY PARK", "WORTHINGTON VALLEY"];
     // axios.get('http://localhost:8080/info/neighborhoods').then(
     //   (neighborhoods)=>{
     //     console.log('neighborhoods: ',neighborhoods.data);
     //     neighborhoods = neighborhoods.data;
-    //     this.setState({
-    //       neighborhoods,
-    //       selected:neighborhoods[0]
-    //     });
+    //     // this.setState({
+    //     //   neighborhoods,
+    //     //   selected:neighborhoods[0]
+    //     // });
     //   }
     // ).catch((err)=>{
     //   console.log('error -',err);
