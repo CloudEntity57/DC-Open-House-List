@@ -73,6 +73,33 @@ class Neighborhood extends Component{
         case 'Capitol Hill':
         id='capitolhill';
         break;
+        case 'Columbia Heights':
+        id='columbiaheights';
+        break;
+        case 'Deanwood':
+        id='deanwood';
+        break;
+        case 'duPont Circle':
+        id='dupontcircle';
+        break;
+        case 'Friendship Heights':
+        id='friendshipheights';
+        break;
+        case 'Georgetown':
+        id='georgetown';
+        break;
+        case 'Logan Circle':
+        id='logancircle';
+        break;
+        case 'Petworth':
+        id='petworth';
+        break;
+        case 'Southwest Waterfront':
+        id='southwestwaterfront';
+        break;
+        case 'Westend':
+        id='westend';
+        break;
         default:
         id=''
       }

@@ -154,7 +154,7 @@ class Listing extends Component{
     showing = (
       <div style={style} className="photo-container"></div>
     )
-    let comments = listing.open_house_events[0].open_house_comments;
+    let comments = (listing) ? listing.open_house_events[0].open_house_comments : '';
 
     //LISTING SPECS:
     let bed_img = (
@@ -257,9 +257,9 @@ class Listing extends Component{
                 </div>
                 <div className="listing-form-column">
                   <div className="listing-form">
-                    {/* <form onSubmit={this.submitForm.bind(this)}>
-                      <input type="submit" >Submit</input>
-                    </form> */}
+                    <form onSubmit={this.submitForm.bind(this)}>
+                      <input type="submit" value="Submit"/>
+                    </form>
                   </div>
                   <div className="listing-agent-photo">photo</div>
                 </div>
@@ -267,18 +267,6 @@ class Listing extends Component{
             </div>
           </div>
         </div>
-        <footer>
-          <div className="footer-info">
-            <span className='logo-contain'>
-              <img className="footer-logo" src={require('../images/rlah_logo-11-01.png')} alt="logo" />
-            </span>
-            <span className="footer-divider"> | </span>
-            <span className='logo-text'>
-              IS A LOCALLY OWNED AND OPERATED FRANCHISE. REAL LIVING REAL ESTATE IS A NETWORK BRAND OF HSF
-              AFFILIATES LLC, WHICH IS MAJORITY OWNED BY HOME SERVICES OF AMERICA, INC. A BERKSHIRE HATHAWAY AFFILIATE.
-            </span>
-          </div>
-        </footer>
       </div>
     );
   }

@@ -15,6 +15,7 @@ class Results extends Component{
     this.state={
       results:'',
       display:'list',
+      selected_listings:'',
       dropdown:false,
       selected:'SORT BY TIME',
       popup:false,
@@ -85,21 +86,21 @@ class Results extends Component{
             overlap:'hidden'
           };
           return(
-            <div className="results-item row">
-              <div style={style} className="results-div col-xs-4 results-item-pic">
-                <div className="results-item-selector">
+            <div id={listing.id} onClick={this.viewTabListing.bind(this)} className="results-item row">
+              <div id={listing.id} style={style} className="results-div col-xs-4 results-item-pic">
+                <div id='pause' className="results-item-selector">
                 </div>
                 {/* <img src="./images/download-2.jpg" alt="listing image" /> */}
               </div>
-              <div className="results-div col-xs-4 results-item-info">
-                <div>
+              <div id={listing.id} className="results-div col-xs-4 results-item-info">
+                <div id={listing.id}>
                   { listing.street_number } { listing.street_name } ({dowUC})<br/>
                   { price } <br/>
                 </div>
               </div>
-              <div className="results-div col-xs-4 results-item-time">
-                <div className="results-item-time-box">
-                  <div>{ time }</div>
+              <div  id={listing.id}className="results-div col-xs-4 results-item-time">
+                <div id={listing.id} className="results-item-time-box">
+                  <div id={listing.id}>{ time }</div>
                 </div>
               </div>
             </div>
@@ -188,8 +189,16 @@ class Results extends Component{
     let item = e.target;
     item.className-=" highlighted";
   }
-  select(e){
-    let item = e.target;
+  viewTabListing(e){
+    e.preventDefault();
+    let id = e.target.id;
+    console.log('tab listing: ',id);
+    if(id=='pause'){
+      let new_id=e.target.parentElement.id;
+      console.log('tab listing: ',new_id);
+      return;
+    }
+    this.viewListing(id);
   }
   viewListing(listing){
     let view = this.state.markers.filter((val)=>{
@@ -197,8 +206,19 @@ class Results extends Component{
       let list = parseInt(listing);
       return val.id == list;
     });
-    // console.log('viewing the listing: ',view);
+    console.log('viewing the listing: ',view);
     this.props.viewListing(view);
+  }
+  select(e){
+    e.preventDefault();
+    let item = e.target;
+    console.log('selecting');
+  }
+  selectAll(e){
+  }
+  sortByTime(){
+  }
+  sortByPrice(){
   }
 
   render(){
