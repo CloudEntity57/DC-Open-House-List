@@ -18,7 +18,10 @@ class Search extends Component{
       day:'',
       neighborhood:'',
       step:'',
-      selected_listing:''
+      selected_listing:'',
+      last_place:'',
+      stored_results:'',
+      raw_stored_results:''
     }
   }
   pressed_toggle(e){
@@ -35,6 +38,7 @@ class Search extends Component{
     e.preventDefault();
     setTimeout(()=>{
       this.setState({
+        last_place:'',
         day:'saturday',
         step:'neighborhoods'
       });
@@ -46,6 +50,7 @@ class Search extends Component{
     e.preventDefault();
     setTimeout(()=>{
       this.setState({
+        last_place:'',
         day:'sunday',
         step:'neighborhoods'
       });
@@ -59,7 +64,8 @@ class Search extends Component{
     console.log('setting neighborhood: ',subd);
     this.setState({
       neighborhood:subd,
-      step:'results'
+      step:'results',
+      last_place:'results'
     });
   }
   arrowToggle(e){
@@ -73,14 +79,28 @@ class Search extends Component{
   }
   viewListing(listing){
     console.log('listing to view: ',listing);
+    let last_place = this.state.last_place;
     this.setState({
       step:'listing',
+      last_place,
       selected_listing:listing[0]
     });
   }
-  goBack(){
+  goBack(place){
+    let last_place = this.state.last_place;
     this.setState({
-      step:'results'
+      step:last_place
+    });
+  }
+  setLastPlace(place){
+    this.setState({
+      last_place:place
+    });
+  }
+  storeResults(results,raw_results){
+    this.setState({
+      stored_results:results,
+      raw_stored_results:raw_results
     });
   }
   render(){
@@ -99,7 +119,7 @@ class Search extends Component{
       options = (<Neighborhood selectNeighborhood={this.selectNeighborhood.bind(this)} arrowToggle={this.arrowToggle.bind(this)}/>);
       break;
       case 'results':
-      options = (<Results viewListing={this.viewListing.bind(this)} params={params}/>);
+      options = (<Results storeResults={this.storeResults.bind(this)} raw_stored_results={this.state.raw_stored_results} stored_results={this.state.stored_results} viewListing={this.viewListing.bind(this)} params={params}/>);
       break;
       case 'listing':
       options = (<Listing goBack={this.goBack.bind(this)} listing={this.state.selected_listing}/>);
@@ -114,7 +134,7 @@ class Search extends Component{
             {/* <Map /> */}
               { options }
               {/* <Days saturday={this.saturday.bind(this)} sunday={this.sunday.bind(this)} pressed_toggle={this.pressed_toggle.bind(this)} /> */}
-            <Featured />
+            <Featured last_place={this.props.last_place} setLastPlace={this.setLastPlace.bind(this)} viewListing={this.viewListing.bind(this)}/>
             <footer>
               <div className="footer-info">
                 <span className='logo-contain'>

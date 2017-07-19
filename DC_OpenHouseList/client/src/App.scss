@@ -251,6 +251,7 @@ footer{
   margin:auto;
   border: 1px solid #000;
   overflow-y: hidden;
+  cursor:pointer;
 }
 
 .btn-3d-blue{
@@ -358,6 +359,7 @@ footer{
   height:40vh;
   font-size: 1em;
   line-height: 1em;
+  text-transform:lowercase !important;
   color:#fff;
   position: absolute;
   width:99%;
@@ -392,6 +394,7 @@ footer{
 }
 .neighborhood-btn,.down-btn{
   margin-bottom:2vh;
+  font-family:'Mirador',Mirador,serif;
   @media(max-width:765px){
     padding-top:.25em !important;
     font-size: 1.5em !important;
@@ -855,6 +858,9 @@ footer{
   border:1px solid #000;
   cursor:pointer;
   display:inline-block;
+  &:hover{
+    background-color:#e4e3e3;
+  }
   @media(max-width: 765px){
     top:4vh;
     width:10vw;

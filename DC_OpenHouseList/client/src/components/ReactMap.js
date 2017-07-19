@@ -23,12 +23,6 @@ class FullMap extends Component{
       neighborhood:''
     }
   }
-  componentDidMount(){
-    let index = this.props.neighborhood;
-    console.log('neighborhood: ',index);
-    // let circumference = Neighborhoods.index;
-    console.log('dupont circle: ',Neighborhoods.index);
-  }
   viewListing(){
     console.log('viewing');
   }
@@ -36,7 +30,8 @@ class FullMap extends Component{
     let neighb = this.props.neighborhood;
     console.log('neigh: ',neighb);
     console.log('West End: ',Neighborhoods[neighb]);
-    console.log('the markerz: ',this.props.markers);
+    let neighborhood_polygon = Neighborhoods[neighb];
+    console.log('neighborhood params: ',this.props.neighborhood);
     return(
       // GoogleMap component has a 100% height style.
       // You have to set the DOM parent height.
@@ -44,27 +39,7 @@ class FullMap extends Component{
       <div style={style}>
         <GoogleMap
           googleMaps={this.props.googleMaps}
-          // You can add and remove coordinates on the fly.
-          // The map will rerender new markers and remove the old ones.
-          // coordinates = {markers}
-          coordinates={[
-            {
-              title: "Toulouse",
-              position: {
-                lat: 43.604363,
-                lng: 1.443363,
-            },
-              onLoaded: (googleMaps, map, marker) => {
 
-                // Set Marker animation
-                // marker.setAnimation(googleMaps.Animation.BOUNCE)
-
-                // Define Marker InfoWindow
-
-              },
-            }
-          ]
-        }
           center={
             { lat: 38.904373, lng: -77.053513 }
           }
@@ -79,6 +54,20 @@ class FullMap extends Component{
               title:"Hello World!"
             });
             let viewListing = this.props.viewListing;
+
+            //FILTER BY NEIGHBORHOOD:
+            var neighborhoodPolygon = new google.maps.Polygon({
+              paths: neighborhood_polygon,
+              strokeColor: '#FF0000',
+              strokeOpacity: 0.8,
+              strokeWeight: 2,
+              fillColor: '#FF0000',
+              fillOpacity: 0.35
+            });
+            neighborhoodPolygon.setMap(map);
+
+            var bounds = new google.maps.LatLngBounds();
+            let num_markers = 0;
             this.props.markers.forEach((val)=>{
               let price = currency.format(val.list_price,{ code: 'USD', decimalDigits: 0 });
               price = price.slice(0,price.length-3);
@@ -90,9 +79,8 @@ class FullMap extends Component{
               let dowUC = (date) ? days[dow] : '';
               dow = (date) ? days[dow] : '';
               dow = (date) ? dow.toLowerCase() : '';
-              // let style1 = {
-              //   backgroundImage:'url('+val.image_urls.all_thumb[0]+')'
-              // }
+              let lat = parseFloat(val.latitude);
+              let lng = parseFloat(val.longitude);
               let marker = new google.maps.Marker(
                 {
                   title:val.street_name,
@@ -102,10 +90,47 @@ class FullMap extends Component{
                   },
                 }
               );
-              marker.setMap(map);
+
+
+              marker.setAnimation(googleMaps.Animation.DROP);
+              let position = new google.maps.LatLng(lat,lng);
+              // console.log('gmap position: ',position);
+              if(google.maps.geometry.poly.containsLocation(position, neighborhoodPolygon)){
+                //place marker
+                console.log('plotting marker!');
+                marker.setMap(map);
+                let boundary = new google.maps.LatLng(marker.position.lat(), marker.position.lng());
+                bounds.extend(boundary);
+                num_markers++;
+              }else{
+                //ignore marker
+                console.log('not plotting marker');
+                //setting grey colored marker:
+                let greymarker = require('../images/map-marker-hi.png');
+                var image = {
+                  url: greymarker,
+                  // This marker is 20 pixels wide by 32 pixels high.
+                  size: new google.maps.Size(20, 32)
+                };
+                // let marker = new google.maps.Marker(
+                //   {
+                //     title:val.street_name,
+                //     position: {
+                //       lat: parseFloat(val.latitude),
+                //       lng: parseFloat(val.longitude),
+                //     },
+                //     icon:image
+                //   }
+                // );
+                // marker.setIcon(image);
+                marker.setMap(map);
+                let boundary = new google.maps.LatLng(marker.position.lat(), marker.position.lng());
+                bounds.extend(boundary);
+                num_markers++;
+              }
             //CREATE PROPERTY INFOWINDOW
             // let mls = val.mls_number.toString();
-            console.log('listing id: ',val.id);
+            // console.log('listing id: ',val.id);
             let mls = val.id.toString();
             var contentString = (
               '<div id='+mls+' class="listing-popup" style='+
@@ -131,36 +156,18 @@ class FullMap extends Component{
             google.maps.event.addListener(infowindow, 'domready', function() {
               let index = '#'+mls;
               jquery(index).on("click", function() {
-                console.log("Yep this event was triggered inside the info!");
                 viewListing(mls);
               });
             });
-
-
+            if(num_markers>=0){
+              map.fitBounds(bounds);
+              // map.panToBounds(bounds);
+              var listener = google.maps.event.addListener(map, "idle", function() {
+                if (map.getZoom() > 16) map.setZoom(16);
+                google.maps.event.removeListener(listener);
+              });
+            }
           });
-            // marker.setMap(map);
-            //DEFINE NEIGHBORHOOD AS POLYGON
-            var triangleCoords = [
-              {lat: 38.946675, lng: -77.034574},
-              {lat: 138.928783, lng: -76.979643},
-              {lat: 38.857971, lng: -77.071487}
-            ];
-
-
-            //FILTER BY NEIGHBORHOOD:
-            var bermudaTriangle = new google.maps.Polygon({paths: triangleCoords});
-            google.maps.event.addListener(map, 'click', function(e) {
-              if(google.maps.geometry.poly.containsLocation(e.latLng, bermudaTriangle)){
-                //place marker
-                console.log('true');
-              }else{
-                //ignore marker
-                console.log('false');
-              }
-            });
-
-
-
           }}
 
         />

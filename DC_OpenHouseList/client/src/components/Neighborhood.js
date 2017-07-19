@@ -12,7 +12,7 @@ class Neighborhood extends Component{
   }
   componentWillMount(){
     //temporary - loading neighborhoods from DB while API key is for Columbia
-    let neighborhoods = ["8000 GEORGETOWN PIKE", "ARNON RIDGE", "BALLANTRAE FARMS", "BALMORAL GREENS", "BATTLETOWN MAGISTERIAL DISTRICT OF CLARKE COUNTY", "BELLEVIEW ESTATES", "BIRCHWOOD", "BLUEMONT", "BOLINVAR FARM", "BRADDOCK WOODS", "BRADLEY FARMS", "BRADLEY HILLS", "BRANDES ESTATES", "BRUFF'S ISLAND", "BUCLAND FARM", "BURNING TREE", "CAMOTOP", "CHESTON ON WYE", "CHILDS POINT", "CLEVELAND PARK", "DIFFICULT RUN VISTA", "EDGEMOOR", "ELK MANOR FARM", "ESTATES AT CREIGHTON FAR", "FIDELIO", "FOUR SEASONS RESIDENCES BALTIMORE", "FOXHALL ROAD", "GEORGETOWN", "GOLD COAST", "HICKORY TREE FARM", "HILLSBORO", "HOLLY BEACH FARM", "INNER HARBOR", "ISLAND CREEK NECK", "KALORAMA", "KENT", "LANDMARK ROAD", "LANGLEY", "LANGLEY FARMS", "MANNING DIVISION", "MASSACHUSETTS AVENUE HEI", "MCLEAN", "MCLEANS GOLD COAST", "MOUNT GORDON FARM", "MOUNTVILLE", "OAKENDALE", "OLD TOWN", "PALATINE SUB", "PEACOCK ESTATE", "PHILLIPS PARK", "POTOMAC OUTSIDE", "PRICKLY PEAR MOUNTAIN", "RIVER OAKS", "RIVINUS", "ROCK FORD ON THE RAPPAHANNOCK RIVER", "ROKEBY FARM", "ROKEBY FARMS", "SHADOW POINT", "SHARPS POINT ESTATE", "THE COVE", "TUFTON FARMS", "TURNBERRY TOWER", "WESLEY HEIGHTS", "WEST END", "WESTMORELAND HILLS", "WIMBLEDON FARMS", "WOODLEY PARK", "WORTHINGTON VALLEY"];
+    let neighborhoods = ["Adams Morgan", "Anacostia", "Brookland", "Capitol Hill", "Columbia Heights", "Deanwood", "duPont Circle", "Eckington", "Friendship Heights", "Georgetown", "Logan Circle", "Petworth", "Southwest Waterfront", "Westend"];
     // axios.get('http://localhost:8080/info/neighborhoods').then(
     //   (neighborhoods)=>{
     //     console.log('neighborhoods: ',neighborhoods.data);
@@ -59,8 +59,25 @@ class Neighborhood extends Component{
     let neighborhoods = this.state.neighborhoods;
     let selected = ( <span> {this.state.selected} </span> );
     neighborhoods = neighborhoods.map((subd)=>{
+      let id = '';
+      switch(subd){
+        case 'Adams Morgan':
+        id='adamsmorgan';
+        break;
+        case 'Anacostia':
+        id='anacostia';
+        break;
+        case 'Brookland':
+        id='brookland';
+        break;
+        case 'Capitol Hill':
+        id='capitolhill';
+        break;
+        default:
+        id=''
+      }
       return(
-        <div id={subd} onMouseEnter={this.highlight.bind(this)} onMouseLeave={this.highlight_off.bind(this)} onClick={this.select.bind(this)} className="subdivision">
+        <div id={id} onMouseEnter={this.highlight.bind(this)} onMouseLeave={this.highlight_off.bind(this)} onClick={this.select.bind(this)} className="subdivision">
           {subd}
         </div>
       );

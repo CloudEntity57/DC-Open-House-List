@@ -8,14 +8,16 @@ class Featured extends Component{
   constructor(props){
     super(props);
     this.state = {
-      featured:[]
+      featured:[],
+      results:[]
     }
   }
   componentWillMount(){
     let featured = [];
-    axios.get('http://localhost:8080/info/open_houses').then(
+    axios.get('http://localhost:8080/info/featured').then(
       (response)=>{
         console.log('axios: ',response);
+        let results = response.data.results;
         featured = response.data.results.slice(0,3).map((listing)=>{
           let price = currency.format(listing.list_price,{ code: 'USD', decimalDigits: 0 });
           price = price.slice(0,price.length-3);
@@ -35,11 +37,11 @@ class Featured extends Component{
             overlap:'hidden'
           };
           return(
-            <div className="featured-item col-sm-4">
-              <div className="pic-holder" style={style}>
-                <div className="listing-info-opacity">
+            <div id={listing.id} onClick={this.viewListing.bind(this)} className="featured-item col-sm-4">
+              <div id={listing.id} className="pic-holder" style={style}>
+                <div id={listing.id} className="listing-info-opacity">
                 </div>
-                <div className="listing-info">
+                <div id={listing.id} className="listing-info">
                   {listing.street_number} {listing.street_name}<br/>
                   {price} - {new_date}
                 </div>
@@ -48,12 +50,27 @@ class Featured extends Component{
           );
         });
         this.setState({
-          featured
+          featured,
+          results:results
         })
       }
     ).catch((err)=>{
       console.log('error -',err);
     });
+  }
+  viewListing(e){
+    let listing = e.target.id;
+    console.log('listingid: ',listing);
+    console.log('viewlisting results: ',this.state.results);
+    let view = this.state.results.filter((val)=>{
+      let list = parseInt(listing);
+      return val.id == list;
+    });
+    console.log('viewing the listing: ',view);
+    this.props.viewListing(view);
+  }
+  featuredReturn(){
+    this.props.setLastPlace(this.props.last_place);
   }
   render(){
     var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];

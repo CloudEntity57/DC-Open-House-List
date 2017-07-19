@@ -299,6 +299,7 @@ footer .logo-text {
   margin: auto;
   border: 1px solid #000;
   overflow-y: hidden;
+  cursor: pointer;
 }
 
 .btn-3d-blue {
@@ -415,6 +416,7 @@ footer .logo-text {
   height: 40vh;
   font-size: 1em;
   line-height: 1em;
+  text-transform: lowercase !important;
   color: #fff;
   position: absolute;
   width: 99%;
@@ -455,6 +457,7 @@ footer .logo-text {
 
 .neighborhood-btn, .down-btn {
   margin-bottom: 2vh;
+  font-family: 'Mirador',Mirador,serif;
 }
 
 @media (max-width: 765px) {
@@ -1065,6 +1068,10 @@ footer .logo-text {
   border: 1px solid #000;
   cursor: pointer;
   display: inline-block;
+}
+
+.back-button:hover {
+  background-color: #e4e3e3;
 }
 
 @media (max-width: 765px) {

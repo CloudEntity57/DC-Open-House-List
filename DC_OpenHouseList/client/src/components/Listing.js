@@ -23,7 +23,7 @@ class Listing extends Component{
     //   (response)=>{
         console.log('axios: ',this.props.listing);
         let listing = this.props.listing
-        let showing = listing.image_urls.all_big[0];
+        let showing = (listing) ? listing.image_urls.all_big[0] : '';
         let showing_index = 0;
         let style = {
           backgroundImage:'url('+showing+')',
@@ -36,7 +36,7 @@ class Listing extends Component{
           <div style={style} className="photo-container"></div>
         )
         let index=-1;
-        let thumb_photos = listing.image_urls.all_thumb.map((pic)=>{
+        let thumb_photos = (listing) ? listing.image_urls.all_thumb.map((pic)=>{
           // console.log('thumb pic: ',pic);
           let style = {
             backgroundImage:'url('+pic+')',
@@ -51,8 +51,8 @@ class Listing extends Component{
 
             </div>
           );
-        });
-        let big_photos = listing.image_urls.all_big;
+        }) : '';
+        let big_photos = (listing) ? listing.image_urls.all_big : '';
 
         this.setState({
           showing,
@@ -154,7 +154,7 @@ class Listing extends Component{
     showing = (
       <div style={style} className="photo-container"></div>
     )
-    let comments = (listing.open_house_events) ? listing.open_house_events[0].open_house_comments : '';
+    let comments = listing.open_house_events[0].open_house_comments;
 
     //LISTING SPECS:
     let bed_img = (

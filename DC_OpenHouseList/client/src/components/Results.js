@@ -35,7 +35,11 @@ class Results extends Component{
     let markers=[];
     let params = this.props.params;
     console.log('params: ',params);
-    axios.get('http://localhost:8080/info/open_houses').then(
+    let stored_results = this.props.stored_results;
+    let i = (stored_results) ? true: false;
+    console.log('app has stored results: ',i, ', ',stored_results, ', and raw results: ',this.state.results);
+    if(stored_results==false){
+      axios.get('http://localhost:8080/info/open_houses').then(
       (response)=>{
         console.log('axios: ',response);
         results = response.data.results.map((listing)=>{
@@ -58,11 +62,13 @@ class Results extends Component{
           //     console.log('no match');
           //     return;
           //   }
-          // }else if(params.day && !params.neighborhood){
-          //   if(dow !==params.day){
-          //     return;
-          //   }
-          // }
+
+          //FILTER DAY:
+          if(params.day){
+            if(dow !==params.day){
+              return;
+            }
+          }
 
           //map coordinates
           let style1 = {
@@ -99,16 +105,23 @@ class Results extends Component{
             </div>
           );
         });
+        this.props.storeResults(markers,results);
         this.setState({
           results,
           markers,
           display:'map'
-        })
-      }
-    ).catch((err)=>{
-      console.log('error -',err);
-    });
-  }
+        });
+      }).catch((err)=>{
+        console.log('error -',err);
+      });
+}else{
+  console.log('setting previous markers');
+  this.setState({
+    results:this.props.raw_stored_results,
+    markers:stored_results
+  });
+}
+}
   arrowToggle(e){
     this.pressed_toggle(e);
   }
@@ -196,18 +209,13 @@ class Results extends Component{
       left:this.state.x,
       top:this.state.y
     }
-    let popup=(this.state.popup) ? (
-      <div className="listing-popup" style={divstyle}>
-        Listing Info!!
-      </div>
-    ) : '';
     let map = (
-      <ReactMap viewListing={this.viewListing.bind(this)} neighborhood="dupontcircle" markers={this.state.markers}/>
+      <ReactMap viewListing={this.viewListing.bind(this)} neighborhood={this.props.params.neighborhood} markers={this.state.markers}/>
       // <Map markers={this.state.markers} />
     );
     switch(this.state.display){
       case 'list':
-      display=(results.length) ? results : (<div className="no-results-msg"><img src="../images/loading.gif" alt="please wait"/></div>);
+      display=(results.length) ? results : (<div className="no-results-msg">Searching for all {this.props.params.neighborhood} listings on {this.props.params.day}. Thanks for your patience.<br/><img src={require("../images/loading.gif")} alt="please wait"/></div>);
       break;
       case 'map':
       display=map;
@@ -234,7 +242,6 @@ class Results extends Component{
     ): '';
     return(
       <div>
-        { popup }
         <div className="results-search-options">
 
           <a onClick={this.arrowToggle.bind(this)} className="btn-3d results-option select-all btn-3d-blue-results" href="#"><div>SELECT ALL</div></a>
