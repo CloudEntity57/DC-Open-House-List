@@ -171,10 +171,10 @@ class Listing extends Component{
     );
     // let beds = ();
     // let baths = ();
-    let sq_ft = (<span>{listing.square_feet}&nbsp;sq ft</span>);
+    let sq_ft = (<span className="sqFt">{listing.square_feet}&nbsp;sq ft</span>);
     price = currency.format(listing.list_price,{ code: 'USD', decimalDigits: 0 });
     price = price.slice(0,price.length-3);
-    price = (<span className="listing-emoji">{price}</span>)
+    price = (<span className="listing-price-emoji">{price}</span>)
     let stories = (listing.stories ==1) ? (<div>{listing.stories}&nbsp;story</div>) : (<div>{listing.stories}&nbsp;stories</div>);
     let built = ( <div>Built:&nbsp;{listing.year_built}</div> );
     let subd = ( <div>Subdivision:&nbsp;{ subdivision }</div> );
