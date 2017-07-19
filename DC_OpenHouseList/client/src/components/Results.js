@@ -69,28 +69,6 @@ class Results extends Component{
             backgroundImage:'url('+listing.image_urls.all_thumb[0]+')'
           }
           markers.push(
-            // {
-            //   position: {
-            //     lat: parseFloat(listing.latitude),
-            //     lng: parseFloat(listing.longitude),
-            //   },
-            //   // key: listing.street_number + listing.street_name,
-            //   defaultAnimation: 2,
-            //   showInfo:false,
-            //   infoContent: (
-            //     <div className="listing-popup" style={style1}>
-            //       <div className="listing-popup-opacity"></div>
-            //       <div className="listing-popup-text">
-            //         { listing.street_number } { listing.street_name } ({dowUC})<br/>
-            //         { price } <br/>
-            //       </div>
-            //     </div>
-            //   )
-            // }
-            // let marker = {
-            //   title:'listing',
-            //   position: {lat: lat, lng: lng}
-            // };
             listing
           );
 

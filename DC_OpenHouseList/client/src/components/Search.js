@@ -3,6 +3,7 @@ import Days from './Days';
 import Neighborhood from './Neighborhood';
 import Results from './Results';
 import Featured from './Featured';
+import Listing from './Listing';
 import axios from 'axios';
 import jquery from 'jquery';
 import Map from './ReactMap';
@@ -68,7 +69,8 @@ class Search extends Component{
     let options;
     let params = {
       day:this.state.day,
-      neighborhood:this.state.neighborhood
+      neighborhood:this.state.neighborhood,
+      listings:this.state.listings
     }
     switch(this.state.step){
       case '':
@@ -79,6 +81,9 @@ class Search extends Component{
       break;
       case 'results':
       options = (<Results params={params}/>);
+      break;
+      case 'listing':
+      options = (<Listing listing={this.state.selected_listing}/>);
       break;
     }
     return(
