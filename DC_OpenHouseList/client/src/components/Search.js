@@ -17,7 +17,8 @@ class Search extends Component{
       pressed2:false,
       day:'',
       neighborhood:'',
-      step:''
+      step:'',
+      selected_listing:''
     }
   }
   pressed_toggle(e){
@@ -70,6 +71,18 @@ class Search extends Component{
       step:''
     });
   }
+  viewListing(listing){
+    console.log('listing to view: ',listing);
+    this.setState({
+      step:'listing',
+      selected_listing:listing[0]
+    });
+  }
+  goBack(){
+    this.setState({
+      step:'results'
+    });
+  }
   render(){
     let btn_style = 'day-btn btn-3d btn-3d-blue';
     let options;
@@ -86,10 +99,10 @@ class Search extends Component{
       options = (<Neighborhood selectNeighborhood={this.selectNeighborhood.bind(this)} arrowToggle={this.arrowToggle.bind(this)}/>);
       break;
       case 'results':
-      options = (<Results params={params}/>);
+      options = (<Results viewListing={this.viewListing.bind(this)} params={params}/>);
       break;
       case 'listing':
-      options = (<Listing listing={this.state.selected_listing}/>);
+      options = (<Listing goBack={this.goBack.bind(this)} listing={this.state.selected_listing}/>);
       break;
     }
     return(

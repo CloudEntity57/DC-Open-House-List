@@ -19,10 +19,10 @@ class Listing extends Component{
     }
   }
   componentWillMount(){
-    axios.get('http://localhost:8080/info/open_houses').then(
-      (response)=>{
-        console.log('axios: ',response);
-        let listing = response.data.results[3];
+    // axios.get('http://localhost:8080/info/open_houses').then(
+    //   (response)=>{
+        console.log('axios: ',this.props.listing);
+        let listing = this.props.listing
         let showing = listing.image_urls.all_big[0];
         let showing_index = 0;
         let style = {
@@ -61,9 +61,9 @@ class Listing extends Component{
           big_photos,
           listing
         });
-      }).catch((err)=>{
-        console.log('error -',err);
-      });
+      // }).catch((err)=>{
+      //   console.log('error -',err);
+      // });
     }
   componentDidMount(){
     let id2='#'+this.state.showing_index;
@@ -128,6 +128,9 @@ class Listing extends Component{
   }
   submitForm(e){
     e.preventDefault();
+  }
+  navigateBack(){
+    this.props.goBack();
   }
   render(){
     let showing=this.state.showing;
@@ -202,6 +205,9 @@ class Listing extends Component{
           </div>
           <div className="listing-header-specs">
             { price }  { bed_img }  { bath_img }  {sq_ft}
+          </div>
+          <div onClick={this.navigateBack.bind(this)} className="back-button">
+            Back
           </div>
         </div>
         <div className="listing-section">

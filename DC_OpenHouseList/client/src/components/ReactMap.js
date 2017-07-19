@@ -29,6 +29,9 @@ class FullMap extends Component{
     // let circumference = Neighborhoods.index;
     console.log('dupont circle: ',Neighborhoods.index);
   }
+  viewListing(){
+    console.log('viewing');
+  }
   render(){
     let neighb = this.props.neighborhood;
     console.log('neigh: ',neighb);
@@ -75,6 +78,7 @@ class FullMap extends Component{
               position: {lat: 39.00702, lng: -77.13851},
               title:"Hello World!"
             });
+            let viewListing = this.props.viewListing;
             this.props.markers.forEach((val)=>{
               let price = currency.format(val.list_price,{ code: 'USD', decimalDigits: 0 });
               price = price.slice(0,price.length-3);
@@ -100,7 +104,9 @@ class FullMap extends Component{
               );
               marker.setMap(map);
             //CREATE PROPERTY INFOWINDOW
-            let mls = val.mls_number.toString();
+            // let mls = val.mls_number.toString();
+            console.log('listing id: ',val.id);
+            let mls = val.id.toString();
             var contentString = (
               '<div id='+mls+' class="listing-popup" style='+
                 'backgroundImage:url('+val.image_urls.all_thumb[1]+')'+
@@ -121,6 +127,13 @@ class FullMap extends Component{
               let index = '#'+mls;
               let style = 'url('+val.image_urls.all_thumb[0]+')'
               jquery(index).css('background-image',style);
+            });
+            google.maps.event.addListener(infowindow, 'domready', function() {
+              let index = '#'+mls;
+              jquery(index).on("click", function() {
+                console.log("Yep this event was triggered inside the info!");
+                viewListing(mls);
+              });
             });
 
 

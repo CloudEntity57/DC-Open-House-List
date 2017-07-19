@@ -43,7 +43,7 @@ class Results extends Component{
           price = price.slice(0,price.length-3);
           //get day of the week:
           let days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-          let date = (listing.open_house_events[0].event_start) ? moment(listing.open_house_events[0].event_start) : '';
+          let date = (listing.open_house_events[0]) ? moment(listing.open_house_events[0].event_start) : '';
           let dow = (date) ? date.day() : '';
           let time = (date) ? date.format('h:mmA') : '';
           let dowUC = (date) ? days[dow] : '';
@@ -101,7 +101,8 @@ class Results extends Component{
         });
         this.setState({
           results,
-          markers
+          markers,
+          display:'map'
         })
       }
     ).catch((err)=>{
@@ -177,6 +178,15 @@ class Results extends Component{
   select(e){
     let item = e.target;
   }
+  viewListing(listing){
+    let view = this.state.markers.filter((val)=>{
+      // console.log('marker: ',val.id, 'listing: ',listing);
+      let list = parseInt(listing);
+      return val.id == list;
+    });
+    // console.log('viewing the listing: ',view);
+    this.props.viewListing(view);
+  }
 
   render(){
     let results = this.state.results;
@@ -192,7 +202,7 @@ class Results extends Component{
       </div>
     ) : '';
     let map = (
-      <ReactMap neighborhood="dupontcircle" markers={this.state.markers}/>
+      <ReactMap viewListing={this.viewListing.bind(this)} neighborhood="dupontcircle" markers={this.state.markers}/>
       // <Map markers={this.state.markers} />
     );
     switch(this.state.display){
