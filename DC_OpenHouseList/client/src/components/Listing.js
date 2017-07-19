@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
+import ListingMap from './ListingMap';
 import axios from 'axios';
 import GoogleMap from "react-google-map";
 import GoogleMapLoader from "react-google-maps-loader";
 import currency from 'currency-formatter';
 import jquery from 'jquery';
 const google = window.google;
-
 
 class Listing extends Component{
   constructor(props){
@@ -22,7 +22,7 @@ class Listing extends Component{
     axios.get('http://localhost:8080/info/open_houses').then(
       (response)=>{
         console.log('axios: ',response);
-        let listing = response.data.results[4];
+        let listing = response.data.results[3];
         let showing = listing.image_urls.all_big[0];
         let showing_index = 0;
         let style = {
@@ -95,7 +95,7 @@ class Listing extends Component{
     this.setState({
       showing_index:newIndex
     });
-  } 
+  }
   goLeft(e){
     e.preventDefault();
     let index = this.state.showing_index;
@@ -126,6 +126,9 @@ class Listing extends Component{
       showing_index:parseInt(e.target.id)
     });
   }
+  submitForm(e){
+    e.preventDefault();
+  }
   render(){
     let showing=this.state.showing;
     let listing=this.state.listing;
@@ -149,6 +152,8 @@ class Listing extends Component{
       <div style={style} className="photo-container"></div>
     )
     let comments = (listing.open_house_events) ? listing.open_house_events[0].open_house_comments : '';
+
+    //LISTING SPECS:
     let bed_img = (
       <div className="listing-beds">
         <div>{listing.num_bedrooms}</div>
@@ -161,18 +166,42 @@ class Listing extends Component{
         <img className="listing-emoji" src={require('../images/bath.svg')} alt="bath" />
       </div>
     );
+    // let beds = ();
+    // let baths = ();
+    let sq_ft = (<span>{listing.square_feet}&nbsp;sq ft</span>);
     price = currency.format(listing.list_price,{ code: 'USD', decimalDigits: 0 });
     price = price.slice(0,price.length-3);
+    price = (<span className="listing-emoji">{price}</span>)
     let stories = (listing.stories ==1) ? (<div>{listing.stories}&nbsp;story</div>) : (<div>{listing.stories}&nbsp;stories</div>);
+    let built = ( <div>Built:&nbsp;{listing.year_built}</div> );
+    let subd = ( <div>Subdivision:&nbsp;{ subdivision }</div> );
+    let dom = ( <div>{listing.cdom}&nbsp;days on the market</div> );
+
+    let st_address = (<div>{listing.street_number}&nbsp;{listing.street_name}</div>);
+    let st_address_string = listing.street_number+listing.street_name
+    let lng = parseFloat(listing.longitude);
+    let lat = parseFloat(listing.latitude);
+    let marker = {
+      title:'listing',
+      position: {lat: lat, lng: lng}
+    };
+    let center = {lat:lat,lng:lng};
+    let map = (
+      <ListingMap center={center} listing_marker={marker}/>
+    );
+    let mls = (
+      <div>MLS #:&nbsp;{listing.mls_number}</div>
+    );
+    let parking = (<div>Parking:&nbsp;{ listing.parking_description } &nbsp; {listing.parking_spaces || listing.garage_spaces}</div>);
     return(
       <div className="wrapper listing-page">
         <div className="listing-header row">
           <div className="listing-address">
-            <div>{listing.street_number}{listing.street_name}</div>
-            <div>{listing.city},{listing.state}&nbsp;{listing.zip}</div>
+            { st_address }
+            <div>{listing.city},&nbsp;{listing.state}&nbsp;{listing.zip}</div>
           </div>
           <div className="listing-header-specs">
-            { price } | { bed_img } | { bath_img }
+            { price }  { bed_img }  { bath_img }  {sq_ft}
           </div>
         </div>
         <div className="listing-section">
@@ -199,26 +228,51 @@ class Listing extends Component{
                   <div>{ comments }</div>
                   <div className="office">Listing courtesy of:&nbsp;{listing.listing_office_name}</div>
                 </div>
-                <div className="listing-map">map</div>
+                <div className="listing-map">{map}</div>
               </div>
             </div>
             <div className="listing-column col-sm-6">
               <div className="specs-form-column">
                 <div className="listing-specs">
-                  <div>{ stories }</div>
-                  <div>{ listing.property_type }&nbsp;{ listing.property_sub_type }</div>
-                  <div>Built:&nbsp;{listing.year_built}</div>
-                  <div>{ subdivision }</div>
-                  <div>{ listing.floor }</div>
-                  <div>{ listing.parking_description } &nbsp; {listing.parking_spaces || listing.garage_spaces}</div>
-                  <div>{listing.cdom}&nbsp;days on market</div>
+
+
+                  <div className="specs-2">
+                    <div className="specs-text">{ subd }</div>
+                    <div className="specs-text">{ listing.floor }</div>
+                    <div className="specs-text">{ dom }</div>
+                    <div className="specs-text">{ mls }</div>
+                  </div>
+                  <div className="specs-1">
+                    <div className="specs-text">{ stories }</div>
+                    <div className="specs-text">{ listing.property_type }&nbsp;{ listing.property_sub_type }</div>
+                    <div className="specs-text">{ built }</div>
+                    <div className="specs-text">{parking}</div>
+                  </div>
                 </div>
-                <div className="listing-form">form</div>
-                <div className="listing-agent-photo">photo</div>
+                <div className="listing-form-column">
+                  <div className="listing-form">
+                    {/* <form onSubmit={this.submitForm.bind(this)}>
+                      <input type="submit" >Submit</input>
+                    </form> */}
+                  </div>
+                  <div className="listing-agent-photo">photo</div>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <footer>
+          <div className="footer-info">
+            <span className='logo-contain'>
+              <img className="footer-logo" src={require('../images/rlah_logo-11-01.png')} alt="logo" />
+            </span>
+            <span className="footer-divider"> | </span>
+            <span className='logo-text'>
+              IS A LOCALLY OWNED AND OPERATED FRANCHISE. REAL LIVING REAL ESTATE IS A NETWORK BRAND OF HSF
+              AFFILIATES LLC, WHICH IS MAJORITY OWNED BY HOME SERVICES OF AMERICA, INC. A BERKSHIRE HATHAWAY AFFILIATE.
+            </span>
+          </div>
+        </footer>
       </div>
     );
   }

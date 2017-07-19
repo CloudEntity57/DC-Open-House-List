@@ -586,7 +586,7 @@ footer .logo-text {
 .listing-popup {
   background-position: center;
   background-size: cover;
-  height: 30vh;
+  height: 25vh;
   width: 30vw;
   color: #fff;
   font-size: 1.25em;
@@ -984,22 +984,14 @@ footer .logo-text {
 
 .listing-header {
   min-height: 15vh;
-  border: 1px solid #000;
   text-align: left;
   padding: 0px 10px;
-}
-
-.listing-header-specs {
-  display: inline-block;
-}
-
-.listing-header-specs div {
-  line-height: 1em;
 }
 
 .listing-address {
   display: inline-block;
   font-size: 2.5em;
+  margin-right: 2.5vw;
 }
 
 @media (max-width: 865px) {
@@ -1009,8 +1001,8 @@ footer .logo-text {
 }
 
 .listing-emoji {
-  width: 4vw;
-  height: 4vw;
+  width: 4.5vw;
+  height: 2.5vw;
 }
 
 .listing-beds, .listing-baths {
@@ -1019,14 +1011,44 @@ footer .logo-text {
   text-align: center;
 }
 
+.listing-beds {
+  border-left: 2px solid #000;
+  border-right: 2px solid #000;
+}
+
+.listing-baths {
+  border-right: 2px solid #000;
+}
+
 .listing-header-specs {
-  font-size: 2em;
-  width: 65%;
+  font-size: 1.5em;
+  width: 45%;
   height: 100%;
+  display: inline-block;
+}
+
+.listing-header-specs div {
+  line-height: 1em;
+}
+
+.specs-1, .specs-2 {
+  padding: 5px;
+  width: 50%;
+  height: 100%;
+  float: right;
+}
+
+.specs-1 .specs-text, .specs-2 .specs-text {
+  font-size: 1.5em;
+  margin-bottom: 5px;
 }
 
 .listing-column {
   padding: 0px;
+}
+
+.listing-form-column {
+  height: 35vh;
 }
 
 .listing-photos {
@@ -1056,7 +1078,7 @@ footer .logo-text {
 }
 
 .arrow {
-  color: #e1e4d1;
+  color: #fff;
   font-size: 2.5em;
   position: absolute;
   z-index: 10;
@@ -1064,7 +1086,7 @@ footer .logo-text {
 }
 
 .arrow:hover {
-  color: #fff;
+  color: #e1e4d1;
 }
 
 .arrow-right {
@@ -1113,6 +1135,11 @@ footer .logo-text {
   height: 25vh;
   border: 3px solid #000;
   width: 100%;
+  overflow: hidden;
+}
+
+.listing-map-object {
+  height: inherit;
 }
 
 .listing-specs, .listing-form, .listing-agent-photo {
@@ -1129,6 +1156,6 @@ footer .logo-text {
 }
 
 .listing-agent-photo {
-  display: inline-block;
+  float: right;
   width: 30%;
 }

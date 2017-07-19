@@ -1,17 +1,38 @@
-import React, {Component} from "react"
-
+import React, {Component} from "react";
+import currency from 'currency-formatter';
+import moment from 'moment';
+import jquery from 'jquery';
+import newN from './Neighborhoods';
 import GoogleMap from "react-google-map"
 import GoogleMapLoader from "react-google-maps-loader"
 // let markers = this.props.markers;
 const google = window.google;
+let Neighborhoods = new newN;
+
+// console.log('West End: ',Neighborhoods.adamsmorgan);
 
 const MY_API_KEY = "82b44a7662b0abb55eebf365a61c50399b512935" // fake
 let style={
   height:'60vh',
   width:'100%'
 };
-class Map extends Component{
+class FullMap extends Component{
+  constructor(props){
+    super(props);
+    this.state={
+      neighborhood:''
+    }
+  }
+  componentDidMount(){
+    let index = this.props.neighborhood;
+    console.log('neighborhood: ',index);
+    // let circumference = Neighborhoods.index;
+    console.log('dupont circle: ',Neighborhoods.index);
+  }
   render(){
+    let neighb = this.props.neighborhood;
+    console.log('neigh: ',neighb);
+    console.log('West End: ',Neighborhoods[neighb]);
     console.log('the markerz: ',this.props.markers);
     return(
       // GoogleMap component has a 100% height style.
@@ -25,28 +46,18 @@ class Map extends Component{
           // coordinates = {markers}
           coordinates={[
             {
-              title: "Washington DC",
+              title: "Toulouse",
               position: {
-                lat: 38.904373, lng: -77.053513
-              },
+                lat: 43.604363,
+                lng: 1.443363,
+            },
               onLoaded: (googleMaps, map, marker) => {
 
                 // Set Marker animation
-                marker.setAnimation(googleMaps.Animation.BOUNCE)
+                // marker.setAnimation(googleMaps.Animation.BOUNCE)
 
                 // Define Marker InfoWindow
-                const infoWindow = new googleMaps.InfoWindow({
-                  content: `
-                    <div>
-                      <h3>Toulouse<h3>
-                      <div>
-                        Toulouse is the capital city of the southwestern
-                        French department of Haute-Garonne,
-                        as well as of the Occitanie region.
-                      </div>
-                    </div>
-                  `,
-                })
+
               },
             }
           ]
@@ -54,50 +65,74 @@ class Map extends Component{
           center={
             { lat: 38.904373, lng: -77.053513 }
           }
-          zoom={8}
+          zoom={10}
+
+          //HANDLE ALL GOOGLE MAPS INFO HERE:
+
           onLoaded={(googleMaps, map) => {
-            map.setMapTypeId(googleMaps.MapTypeId.SATELLITE)
+            // map.setMapTypeId(googleMaps.MapTypeId.STREET)
             var marker = new google.maps.Marker({
               position: {lat: 39.00702, lng: -77.13851},
               title:"Hello World!"
             });
-
+            this.props.markers.forEach((val)=>{
+              let price = currency.format(val.list_price,{ code: 'USD', decimalDigits: 0 });
+              price = price.slice(0,price.length-3);
+              //get day of the week:
+              let days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+              let date = (val.open_house_events) ? moment(val.open_house_events[0].event_start) : '';
+              let dow = (date) ? date.day() : '';
+              let time = (date) ? date.format('h:mmA') : '';
+              let dowUC = (date) ? days[dow] : '';
+              dow = (date) ? days[dow] : '';
+              dow = (date) ? dow.toLowerCase() : '';
+              // let style1 = {
+              //   backgroundImage:'url('+val.image_urls.all_thumb[0]+')'
+              // }
+              let marker = new google.maps.Marker(
+                {
+                  title:val.street_name,
+                  position: {
+                    lat: parseFloat(val.latitude),
+                    lng: parseFloat(val.longitude),
+                  },
+                }
+              );
+              marker.setMap(map);
             //CREATE PROPERTY INFOWINDOW
-            var contentString = '<div id="content">'+
-            '<div id="siteNotice">'+
-            '</div>'+
-            '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
-            '<div id="bodyContent">'+
-            '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
-            'sandstone rock formation in the southern part of the '+
-            'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
-            'south west of the nearest large town, Alice Springs; 450&#160;km '+
-            '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
-            'features of the Uluru - Kata Tjuta National Park. Uluru is '+
-            'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
-            'Aboriginal people of the area. It has many springs, waterholes, '+
-            'rock caves and ancient paintings. Uluru is listed as a World '+
-            'Heritage Site.</p>'+
-            '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
-            'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
-            '(last visited June 22, 2009).</p>'+
-            '</div>'+
-            '</div>';
+            let mls = val.mls_number.toString();
+            var contentString = (
+              '<div id='+mls+' class="listing-popup" style='+
+                'backgroundImage:url('+val.image_urls.all_thumb[1]+')'+
+                '>'+
+                '<div class="listing-popup-opacity"></div>'+
+                '<div class="listing-popup-text">'+
+                 val.street_number + val.street_name + '('+dowUC+')<br/>'+
+                 price +' <br/>'+
+                '</div>'+
+              '</div>'
+            );
 
             var infowindow = new google.maps.InfoWindow({
               content: contentString
             });
             marker.addListener('click', function() {
               infowindow.open(map, marker);
+              let index = '#'+mls;
+              let style = 'url('+val.image_urls.all_thumb[0]+')'
+              jquery(index).css('background-image',style);
             });
 
 
+          });
+            // marker.setMap(map);
             //DEFINE NEIGHBORHOOD AS POLYGON
             var triangleCoords = [
               {lat: 38.946675, lng: -77.034574},
               {lat: 138.928783, lng: -76.979643},
               {lat: 38.857971, lng: -77.071487}
             ];
+
 
             //FILTER BY NEIGHBORHOOD:
             var bermudaTriangle = new google.maps.Polygon({paths: triangleCoords});
@@ -113,7 +148,6 @@ class Map extends Component{
 
 
 
-            marker.setMap(map);
           }}
 
         />
@@ -188,7 +222,7 @@ class Map extends Component{
 //   googleMaps: PropTypes.object.isRequired,
 // }
 
-export default GoogleMapLoader(Map, {
+export default GoogleMapLoader(FullMap, {
   libraries: ["places"],
   key: MY_API_KEY,
 })
