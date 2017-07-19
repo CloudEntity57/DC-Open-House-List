@@ -43,12 +43,12 @@ class Results extends Component{
           price = price.slice(0,price.length-3);
           //get day of the week:
           let days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-          let date = moment(listing.open_house_events[0].event_start);
-          let dow = date.day();
-          let time = date.format('h:mmA');
-          let dowUC = days[dow];
-          dow = days[dow];
-          dow = dow.toLowerCase();
+          let date = (listing.open_house_events[0].event_start) ? moment(listing.open_house_events[0].event_start) : '';
+          let dow = (date) ? date.day() : '';
+          let time = (date) ? date.format('h:mmA') : '';
+          let dowUC = (date) ? days[dow] : '';
+          dow = (date) ? days[dow] : '';
+          dow = (date) ? dow.toLowerCase() : '';
 
           //FILTER:
 

@@ -4,6 +4,7 @@ import Neighborhood from './Neighborhood';
 import Results from './Results';
 import Featured from './Featured';
 import Listing from './Listing';
+import Header from './Header';
 import axios from 'axios';
 import jquery from 'jquery';
 import Map from './ReactMap';
@@ -64,6 +65,11 @@ class Search extends Component{
     let $item = jquery(e.target).closest('span');
     this.pressed_toggle(e);
   }
+  reload(){
+    this.setState({
+      step:''
+    });
+  }
   render(){
     let btn_style = 'day-btn btn-3d btn-3d-blue';
     let options;
@@ -88,6 +94,8 @@ class Search extends Component{
     }
     return(
       <div>
+
+          <Header reload={this.reload.bind(this)}/>
           <div className="wrapper">
 
             {/* <Map /> */}

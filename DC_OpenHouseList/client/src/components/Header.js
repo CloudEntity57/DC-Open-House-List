@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
+import { hashHistory } from 'react-router';
 
 class Header extends Component{
   pickDay(e){
     let day = e.target.id;
     console.log('picking ',day);
+  }
+  reload(e){
+    e.preventDefault();
+    this.props.reload();
   }
   render(){
     return(
@@ -21,7 +26,7 @@ class Header extends Component{
           </button>
           <div className="collapse navbar-collapse">
             <ul className="nav navbar-nav navbar-right">
-              <li><i className="glyphicon glyphicon-play"></i><a href="/index.html">HOME</a></li>
+              <li onClick={this.reload.bind(this)}><i className="glyphicon glyphicon-play"></i><a href="/index.html">HOME</a></li>
               {/* <li id="saturday" onClick={this.pickDay.bind(this)}><i className="glyphicon glyphicon-play"></i>SATURDAY</li>
               <li id="sunday" onClick={this.pickDay.bind(this)}><i className="glyphicon glyphicon-play"></i>SUNDAY</li> */}
             </ul>

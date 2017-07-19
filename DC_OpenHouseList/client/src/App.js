@@ -7,7 +7,6 @@ class App extends Component {
     let children = this.props.children;
     return (
       <div>
-        <Header />
         { children }
       </div>
     );
