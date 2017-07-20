@@ -95,4 +95,42 @@ router.post('/submitform',function(req,res,next){
   console.log('submitting: ',form_data);
 });
 
+router.get('/price/:id',function(req,res,next){
+  let price_index = req.params.id;
+  console.log('price index: ',price_index);
+  switch(price_index){
+    case '3':
+    price = "&min_list_price=0&max_list_price=500";
+    console.log('3 was pressed');
+    break;
+    case '4':
+    price = "&min_list_price=500&max_list_price=1000000";
+    break;
+    case '5':
+    price = "&min_list_price=1000000&max_list_price=3000000";
+    break;
+    case '6':
+    price = "&min_list_price=3000000";
+    break;
+    default:"&min_list_price=1000000&max_list_price=3000000";
+  }
+  let url = "https://api.displet.com/residentials/search?authentication_token="+apiKey+"&;return_fields="+params+"&min_bedrooms=2&min_bathrooms=1&min_list_price=350&open_house=y&open_house_within=7&limit=50"+price;
+
+  let options = {
+    url:url,
+    headers:{
+      'Accept':'application/javascript',
+      'Referer':'http://localhost:3000'
+    }
+  }
+
+  request(options, function (error, response, body) {
+    console.log('error:', error); // Print the error if one occurred
+    console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+    // console.log('body:', body); // Print the HTML for the Google homepage.
+    body=JSON.parse(body);
+    res.json(body);
+  });
+});
+
 module.exports = router;

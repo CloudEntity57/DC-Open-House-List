@@ -222,6 +222,18 @@ class Results extends Component{
   sortTime(e){
   }
   sortPrice(e){
+    e.preventDefault();
+    let id = e.target.id;
+    console.log('searching price: ',id);
+    let data = { id:id };
+    axios.get('http://localhost:8080/info/price/'+id).then((res)=>{
+      console.log('priced results: ',res);
+      this.setState({
+        results:res
+      });
+    }).catch((err)=>{
+      console.log('err - ',err);
+    });
   }
   sortAsc(e){
   }
@@ -263,17 +275,17 @@ class Results extends Component{
         </div>
         </div>
         <div className="sort-text">
-          <div id='time' {...drop} onClick={this.select.bind(this)} className="sort-values subdivision">
+          <div id='time' {...drop} onClick={this.sortTime.bind(this)} className="sort-values subdivision">
             SORT BY TIME
           </div>
-          <div id='price' onMouseEnter={this.highlight.bind(this)} onMouseLeave={this.highlight_off.bind(this)} onClick={this.select.bind(this)} className="sort-values subdivision">
+          <div id='price' className="sort-values subdivision">
             SORT BY PRICE
           </div>
           <div className="sort-subvalues">
-            <div className="subdivision" id='3' {...drop}>- $0-$500,000</div>
-            <div className="subdivision" id='4' {...drop}>- $500,000-$1,000,000</div>
-            <div className="subdivision" id='5' {...drop}>- $1,000,000-$3,000,000</div>
-            <div className="subdivision" id='6' {...drop}>- $3,000,000+</div>
+            <div onClick={this.sortPrice.bind(this)} className="subdivision" id='3' {...drop}>- $0-$500,000</div>
+            <div onClick={this.sortPrice.bind(this)} className="subdivision" id='4' {...drop}>- $500,000-$1,000,000</div>
+            <div onClick={this.sortPrice.bind(this)} className="subdivision" id='5' {...drop}>- $1,000,000-$3,000,000</div>
+            <div onClick={this.sortPrice.bind(this)} className="subdivision" id='6' {...drop}>- $3,000,000+</div>
           </div>
         </div>
       </div>
