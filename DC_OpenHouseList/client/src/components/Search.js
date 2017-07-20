@@ -38,7 +38,7 @@ class Search extends Component{
     e.preventDefault();
     setTimeout(()=>{
       this.setState({
-        last_place:'',
+        last_place:'neighborhoods',
         day:'saturday',
         step:'neighborhoods'
       });
@@ -50,7 +50,7 @@ class Search extends Component{
     e.preventDefault();
     setTimeout(()=>{
       this.setState({
-        last_place:'',
+        last_place:'neighborhoods',
         day:'sunday',
         step:'neighborhoods'
       });
@@ -81,10 +81,16 @@ class Search extends Component{
     console.log('listing to view: ',listing);
     let last_place = this.state.last_place;
     this.setState({
-      step:'listing',
+      step:'results',
       last_place,
       selected_listing:listing[0]
     });
+    setTimeout(()=>{
+      this.setState({
+        step:'listing'
+      });
+    },15);
+    window.scrollTo(0,0);
   }
   goBack(place){
     let last_place = this.state.last_place;
@@ -111,6 +117,7 @@ class Search extends Component{
       neighborhood:this.state.neighborhood,
       listings:this.state.listings
     }
+    let selected_listing = this.state.selected_listing;
     switch(this.state.step){
       case '':
       options = (<Days saturday={this.saturday.bind(this)} sunday={this.sunday.bind(this)} pressed_toggle={this.pressed_toggle.bind(this)} />);
@@ -122,7 +129,7 @@ class Search extends Component{
       options = (<Results storeResults={this.storeResults.bind(this)} raw_stored_results={this.state.raw_stored_results} stored_results={this.state.stored_results} viewListing={this.viewListing.bind(this)} params={params}/>);
       break;
       case 'listing':
-      options = (<Listing goBack={this.goBack.bind(this)} listing={this.state.selected_listing}/>);
+      options = (<Listing goBack={this.goBack.bind(this)} listing={selected_listing}/>);
       break;
     }
     return(

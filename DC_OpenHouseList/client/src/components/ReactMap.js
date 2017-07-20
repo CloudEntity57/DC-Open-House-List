@@ -43,7 +43,7 @@ class FullMap extends Component{
           center={
             { lat: 38.904373, lng: -77.053513 }
           }
-          zoom={10}
+          zoom={4}
 
           //HANDLE ALL GOOGLE MAPS INFO HERE:
 
@@ -138,7 +138,7 @@ class FullMap extends Component{
                 '>'+
                 '<div class="listing-popup-opacity"></div>'+
                 '<div class="listing-popup-text">'+
-                 val.street_number + val.street_name + '('+dowUC+')<br/>'+
+                 val.street_number + ' ' + val.street_name + ' ('+dowUC+')<br/>'+
                  price +' <br/>'+
                 '</div>'+
               '</div>'

@@ -90,4 +90,9 @@ router.get('/neighborhoods',function(req,res,next){
   });
 });
 
+router.post('/submitform',function(req,res,next){
+  let form_data = req.body;
+  console.log('submitting: ',form_data);
+});
+
 module.exports = router;

@@ -82,16 +82,16 @@ class Listing extends Component{
       jquery(id).addClass('thumb-viewing');
       jquery(id2).removeClass('thumb-viewing');
     }
-    let width=jquery('#1').width();
-    let scroll_width=(index+2)*width;
-    console.log('width: ',scroll_width);
-    let container_width=jquery('.scroller').width();
-    console.log('container: ',container_width);
-    if(scroll_width>container_width){
-      let left = (-(scroll_width-container_width));
-      console.log('past bounds! adjusting: ');
-      jquery('.photo-carousel-interior').css('left',left);
-    }
+    // let width=jquery('#1').width();
+    // let scroll_width=(index+2)*width;
+    // console.log('width: ',scroll_width);
+    // let container_width=jquery('.scroller').width();
+    // console.log('container: ',container_width);
+    // if(scroll_width>container_width){
+    //   let left = (-(scroll_width-container_width));
+    //   console.log('past bounds! adjusting: ');
+    //   jquery('.photo-carousel-interior').css('left',left);
+    // }
     this.setState({
       showing_index:newIndex
     });
@@ -128,6 +128,30 @@ class Listing extends Component{
   }
   submitForm(e){
     e.preventDefault();
+    let first = this.refs.first_name.value;
+    let last = this.refs.last_name.value;
+    let email = this.refs.email.value;
+    let phone = this.refs.phone.value;
+    let textarea = this.refs.textarea.value;
+    console.log('submitting: ',first,last,email,textarea);
+    //FILTER FOR SCRIPTING ATTACKS:
+    //CODE HERE
+    if(this.refs.hidden.val !==undefined){
+      console.log('bot');
+      return;
+    }
+    let data = {
+      first,
+      last,
+      email,
+      phone,
+      textarea
+    }
+    axios.post('http://localhost:8080/info/submitform',data).then((response)=>{
+      console.log('successfully submitted',response);
+    }).catch((err)=>{
+      console.log('err - ',err);
+    });
   }
   navigateBack(){
     this.props.goBack();
@@ -155,53 +179,55 @@ class Listing extends Component{
       <div style={style} className="photo-container"></div>
     )
     let comments = (listing) ? listing.open_house_events[0].open_house_comments : '';
-
+    let listing_bedrooms = (listing) ? listing.num_bedrooms : '';
     //LISTING SPECS:
-    let bed_img = (
+    let bed_img = (listing) ? (
       <div className="listing-beds">
-        <div>{listing.num_bedrooms}</div>
+        <div>{listing_bedrooms}</div>
         <img className="listing-emoji" src={require('../images/bed.svg')} alt="bed" />
       </div>
-    );
-    let bath_img = (
+    ) : '';
+    let bath_img = (listing) ? (
       <div className="listing-baths">
         <div>{listing.full_baths}/{listing.half_baths}</div>
         <img className="listing-emoji" src={require('../images/bath.svg')} alt="bath" />
       </div>
-    );
+    ) : '';
     // let beds = ();
     // let baths = ();
-    let sq_ft = (<span className="sqFt">{listing.square_feet}&nbsp;sq ft</span>);
-    price = currency.format(listing.list_price,{ code: 'USD', decimalDigits: 0 });
-    price = price.slice(0,price.length-3);
-    price = (<span className="listing-price-emoji">{price}</span>)
-    let stories = (listing.stories ==1) ? (<div>{listing.stories}&nbsp;story</div>) : (<div>{listing.stories}&nbsp;stories</div>);
-    let built = ( <div>Built:&nbsp;{listing.year_built}</div> );
+    let sq_ft = (listing) ? (<span className="sqFt">{listing.square_feet}&nbsp;sq ft</span>): '';
+    price = (listing) ? currency.format(listing.list_price,{ code: 'USD', decimalDigits: 0 }): '';
+    price = (listing) ? price.slice(0,price.length-3): '';
+    price = (listing) ? (<span className="listing-price-emoji">{price}</span>) : '';
+    let stories = (listing) ? (<div>{listing.stories}&nbsp;story</div>) : '';
+    let built = (listing) ? ( <div>Built:&nbsp;{listing.year_built}</div> ): '';
     let subd = ( <div>Subdivision:&nbsp;{ subdivision }</div> );
-    let dom = ( <div>{listing.cdom}&nbsp;days on the market</div> );
+    let dom = (listing) ? ( <div>{listing.cdom}&nbsp;days on the market</div> ): '';
 
-    let st_address = (<div>{listing.street_number}&nbsp;{listing.street_name}</div>);
-    let st_address_string = listing.street_number+listing.street_name
-    let lng = parseFloat(listing.longitude);
-    let lat = parseFloat(listing.latitude);
+    let st_address = (listing) ? (<div>{listing.street_number}&nbsp;{listing.street_name}</div>) : '';
+    let st_address_string = (listing) ? listing.street_number+listing.street_name : '';
+    let lng = (listing) ? parseFloat(listing.longitude) : '';
+    let lat = (listing) ? parseFloat(listing.latitude) : '';
+    let floor_type = (listing) ? listing.floor : '';
+    let flooring = (floor_type !=='') ? (<div>Flooring:&nbsp;{ floor_type }</div>) : '';
     let marker = {
       title:'listing',
       position: {lat: lat, lng: lng}
     };
     let center = {lat:lat,lng:lng};
-    let map = (
+    let map = (listing) ? (
       <ListingMap center={center} listing_marker={marker}/>
-    );
-    let mls = (
-      <div>MLS #:&nbsp;{listing.mls_number}</div>
-    );
-    let parking = (<div>Parking:&nbsp;{ listing.parking_description } &nbsp; {listing.parking_spaces || listing.garage_spaces}</div>);
+    ) : '';
+    let mls = (listing) ? (
+      <div>MLS #:&nbsp;{(listing) ? listing.mls_number : ''}</div>
+    ) : '';
+    let parking = (listing) ? (<div>Parking spaces:&nbsp;{(listing) ? listing.parking_spaces || listing.garage_spaces : ''}</div>) : '';
     return(
       <div className="wrapper listing-page">
         <div className="listing-header row">
           <div className="listing-address">
             { st_address }
-            <div>{listing.city},&nbsp;{listing.state}&nbsp;{listing.zip}</div>
+            <div>{(listing) ? listing.city : ''},&nbsp;{(listing) ? listing.state : ''}&nbsp;{(listing) ? listing.zip : ''}</div>
           </div>
           <div className="listing-header-specs">
             { price }  { bed_img }  { bath_img }  {sq_ft}
@@ -231,8 +257,8 @@ class Listing extends Component{
 
                 </div>
                 <div className="listing-description">
-                  <div>{ comments }</div>
-                  <div className="office">Listing courtesy of:&nbsp;{listing.listing_office_name}</div>
+                  <div className="listing-comments">{ comments }</div>
+                  <div className="office">Listing courtesy of:&nbsp;{(listing) ? listing.listing_office_name : ''}</div>
                 </div>
                 <div className="listing-map">{map}</div>
               </div>
@@ -244,24 +270,46 @@ class Listing extends Component{
 
                   <div className="specs-2">
                     <div className="specs-text">{ subd }</div>
-                    <div className="specs-text">{ listing.floor }</div>
+                    <div className="specs-text">{ flooring }</div>
                     <div className="specs-text">{ dom }</div>
                     <div className="specs-text">{ mls }</div>
                   </div>
                   <div className="specs-1">
                     <div className="specs-text">{ stories }</div>
-                    <div className="specs-text">{ listing.property_type }&nbsp;{ listing.property_sub_type }</div>
+                    <div className="specs-text">{ (listing) ? listing.property_type : '' }&nbsp;{ (listing) ? listing.property_sub_type : '' }</div>
                     <div className="specs-text">{ built }</div>
                     <div className="specs-text">{parking}</div>
                   </div>
                 </div>
                 <div className="listing-form-column">
                   <div className="listing-form">
+                    <div className="listing-form-header">
+                      Ask a Question
+                      <div className="listing-form-header-quote">"We'll respond quickly!"</div>
+                    </div>
                     <form onSubmit={this.submitForm.bind(this)}>
+                      <div className="form-column">
+                        <input ref="first_name" placeholder="First Name"/>
+                        <input ref="last_name" placeholder="Last Name"/>
+                      </div>
+                      <div className="form-column">
+                        <input ref="email" placeholder="E-mail"/>
+                        <input ref="phone" placeholder="Phone"/>
+                      </div>
+                      <textarea ref="textarea" placeholder = "What can we do for you?"/>
+                      <input ref="hidden" className="hidden" />
                       <input type="submit" value="Submit"/>
                     </form>
                   </div>
-                  <div className="listing-agent-photo">photo</div>
+                  <div className="listing-agent-photo">
+                    <img src={require('../images/Justin_Levitch.jpg')} className="image-responsive" alt="Agent Image" />
+                    <h3>Justin Levitch</h3>
+                    <div>Real Estate Professional</div>
+                    <div>4600 North Park Avenue, Suite 100</div>
+                    <div>Chevy Chase, MD 20815</div>
+                    <div>Phone: 301-652-0643</div>
+                    <div>Email: <a href="info@rlahre.com" alt='email'>info@rlahre.com</a></div>
+                  </div>
                 </div>
               </div>
             </div>

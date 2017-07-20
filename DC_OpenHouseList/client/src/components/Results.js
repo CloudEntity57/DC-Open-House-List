@@ -19,6 +19,7 @@ class Results extends Component{
       dropdown:false,
       selected:'SORT BY TIME',
       popup:false,
+      sort_order:'descending',
       markers: [
         {
           position: {
@@ -98,7 +99,7 @@ class Results extends Component{
                   { price } <br/>
                 </div>
               </div>
-              <div  id={listing.id}className="results-div col-xs-4 results-item-time">
+              <div  id={listing.id} className="results-div col-xs-4 results-item-time">
                 <div id={listing.id} className="results-item-time-box">
                   <div id={listing.id}>{ time }</div>
                 </div>
@@ -183,11 +184,13 @@ class Results extends Component{
   }
   highlight(e){
     let item = e.target;
-    item.className+=" highlighted";
+    let index = '#'+e.target.id;
+    jquery(index).addClass('highlighted');
   }
   highlight_off(e){
     let item = e.target;
-    item.className-=" highlighted";
+    let index = '#'+e.target.id;
+    jquery(index).removeClass('highlighted');
   }
   viewTabListing(e){
     e.preventDefault();
@@ -216,9 +219,13 @@ class Results extends Component{
   }
   selectAll(e){
   }
-  sortByTime(){
+  sortTime(e){
   }
-  sortByPrice(){
+  sortPrice(e){
+  }
+  sortAsc(e){
+  }
+  sortDesc(e){
   }
 
   render(){
@@ -244,18 +251,29 @@ class Results extends Component{
       display=results;
     }
     let btn_style = 'day-btn btn-3d btn-3d-blue';
-
+    let drop = {
+      onMouseEnter:this.highlight.bind(this),
+      onMouseLeave:this.highlight_off.bind(this)
+    }
     let dropdown = (this.state.dropdown) ? (
       <div>
         <div className="sort-dropdown-list">
-        <div className="sort-dropdown-opacity"></div>
+        <div className="sort-dropdown-opacity">
+
+        </div>
         </div>
         <div className="sort-text">
-          <div id='time' onMouseEnter={this.highlight.bind(this)} onMouseLeave={this.highlight_off.bind(this)} onClick={this.select.bind(this)} className="subdivision">
+          <div id='time' {...drop} onClick={this.select.bind(this)} className="sort-values subdivision">
             SORT BY TIME
           </div>
-          <div id='price' onMouseEnter={this.highlight.bind(this)} onMouseLeave={this.highlight_off.bind(this)} onClick={this.select.bind(this)} className="subdivision">
+          <div id='price' onMouseEnter={this.highlight.bind(this)} onMouseLeave={this.highlight_off.bind(this)} onClick={this.select.bind(this)} className="sort-values subdivision">
             SORT BY PRICE
+          </div>
+          <div className="sort-subvalues">
+            <div className="subdivision" id='3' {...drop}>- $0-$500,000</div>
+            <div className="subdivision" id='4' {...drop}>- $500,000-$1,000,000</div>
+            <div className="subdivision" id='5' {...drop}>- $1,000,000-$3,000,000</div>
+            <div className="subdivision" id='6' {...drop}>- $3,000,000+</div>
           </div>
         </div>
       </div>
@@ -268,14 +286,19 @@ class Results extends Component{
           <a onClick={this.listToggle.bind(this)} className="btn-3d results-option list-view  btn-3d-blue-results" href="#"><div>LIST VIEW</div></a>
           <a onClick={this.mapBtnToggle.bind(this)} className="btn-3d results-option map-view btn-3d-blue-results" href="#"><div>MAP VIEW</div></a>
           <a className="btn-3d results-option sort-by  btn-3d-blue-results" href="#">
-            <div>SORT BY TIME</div>
+            <div>SORT BY</div>
             { dropdown }
           </a>
           <a onClick={this.downBtnToggle.bind(this)} className="btn-3d results-option sort-by-arrow  btn-3d-blue-results" href="#"><span className="glyphicon glyphicon-triangle-bottom"></span></a>
 
         </div>
+        <div>
+        <div className="up-down-filter">
+          <i onClick={this.sortAsc.bind(this)} className="glyphicon glyphicon-triangle-top"></i>
+          <i onClick={this.sortDesc.bind(this)} className="glyphicon glyphicon-triangle-bottom"></i>
+        </div>
+      </div>
     <div className="results">
-
       { display }
 
     </div>
